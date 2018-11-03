@@ -18,3 +18,4 @@ public class MainActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction().add(R.id.menubar_fragment, firstFragment).commit();
     }
 }
+//아무거나 커밋
