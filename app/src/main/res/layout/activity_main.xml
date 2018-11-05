@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,20 +20,6 @@
 
     </FrameLayout>
 
-        <!--<fragment
-            android:id="@+id/fragment_checklist"
-            android:name="com.example.nbang.nbangtravel.ChecklistActivity"
-            android:layout_width="match_parent"
-            android:layout_height="508dp"
-            />
-
-        <fragment
-            android:id="@+id/fragment_menubar"
-            android:name="com.example.nbang.nbangtravel.MenuBarActivity"
-            android:layout_width="match_parent"
-            android:layout_height="59dp"
-            />-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -47,51 +32,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Checklist" />
+            android:text="@string/checklist" />
 
         <Button
             android:id="@+id/diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Diary" />
+            android:text="@string/diary" />
 
         <Button
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home" />
+            android:text="@string/home" />
 
         <Button
             android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Camera" />
+            android:text="@string/camera" />
 
         <Button
             android:id="@+id/account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Account" />
+            android:text="@string/account" />
 
     </LinearLayout>
-
-        <!--<fragment
-            android:name="com.example.nbang.nbangtravel.ChecklistActivity"
-            android:id="@+id/hl_checklist_fragment"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <fragment
-            android:name="com.example.nbang.nbangtravel.MenuBarActivity"
-            android:id="@+id/menubar_fragment"
-            android:layout_weight="6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
--->
-
-    </RelativeLayout>
+</RelativeLayout>

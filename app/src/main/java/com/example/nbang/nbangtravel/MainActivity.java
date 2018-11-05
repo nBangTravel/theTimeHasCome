@@ -26,7 +26,18 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ChecklistActivity checklistActivity = new ChecklistActivity();
-
         fragmentTransaction.add(R.id.fragment_checklist, checklistActivity);
+
+        MenuBarActivity menuBarActivity = new MenuBarActivity();
+        fragmentTransaction.add(R.id.fragment_menubar, menuBarActivity);
     }
+
+    //TODO: Accounting Book button clicked
+    //event handler
+
+    //TODO: Diary button clicked
+    //event handler
+
+    //TODO: Camera button clicked
+    //camera intent
 }

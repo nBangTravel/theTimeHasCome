@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">nBangTravel</string>
+    <string name="account">Accounting Book</string>
+    <string name="checklist">Checklist</string>
+    <string name="diary">Diary</string>
+    <string name="camera">Camera</string>
+    <string name="home">Home</string>
 </resources>
