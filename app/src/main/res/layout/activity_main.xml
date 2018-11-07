@@ -12,12 +12,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/menubar">
 
-        <fragment
-            android:id="@+id/fragment_checklist"
-            android:name="com.example.nbang.nbangtravel.ChecklistActivity"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
     </FrameLayout>
 
     <LinearLayout
@@ -32,7 +26,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/checklist" />
+            android:text="@string/checklist"
+            android:onClick="onClick_ch"/>
 
         <Button
             android:id="@+id/diary"
@@ -60,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/account" />
+            android:text="@string/account"
+            android:onClick="onClick_ac"/>
 
     </LinearLayout>
 </RelativeLayout>

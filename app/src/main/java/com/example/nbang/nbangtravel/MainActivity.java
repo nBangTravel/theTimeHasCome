@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -20,16 +21,35 @@ public class MainActivity extends AppCompatActivity {
         ListView listview = (ListView)findViewById(R.id.list_checklist);
         listview.setAdapter(adapter);*/
 
-
-        //Fragment assign
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ChecklistActivity checklistActivity = new ChecklistActivity();
-        fragmentTransaction.add(R.id.fragment_checklist, checklistActivity);
+        fragmentTransaction.add(R.id.fragment_container, checklistActivity);
+    }
 
-        MenuBarActivity menuBarActivity = new MenuBarActivity();
-        fragmentTransaction.add(R.id.fragment_menubar, menuBarActivity);
+    protected void onClick_ac(View view){
+
+        AccountActivity accountActivity = new AccountActivity();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, accountActivity);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
+    }
+
+    protected void onClick_ch(View view){
+
+        ChecklistActivity checklistActivity = new ChecklistActivity();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, checklistActivity);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+
     }
 
     //TODO: Accounting Book button clicked
