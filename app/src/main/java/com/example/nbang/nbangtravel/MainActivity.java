@@ -15,8 +15,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SQLiteDatabase db = null;
-    private Cursor constantCursor = null;
+    //private SQLiteDatabase db = null;
+    //private Cursor constantCursor = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

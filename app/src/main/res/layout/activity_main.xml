@@ -37,8 +37,7 @@
             android:layout_weight="1"
             android:src="@drawable/diary"
             android:background="@android:color/transparent"
-            android:onClick="onClick_diary"
-            android:clickable="true"/>
+            android:onClick="onClick_diary"/>
 
         <ImageButton
             android:id="@+id/home"
