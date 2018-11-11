@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -11,11 +12,30 @@
         android:text="@string/checklist"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_above="@+id/list_checklist"/>
+        android:layout_marginLeft="8dp"
 
-    <ListView
+        />
+
+    <TextView
         android:id="@+id/list_checklist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="40sp"
+        android:choiceMode="multipleChoice" />
 
-</LinearLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/add_circle"
+        android:visibility="visible"
+        android:layout_margin="16dp"
+        app:backgroundTint="#ffffff"
+        app:elevation="6dp"
+        app:pressedTranslationZ="12dp"/>
+
+
+
+
+</FrameLayout>

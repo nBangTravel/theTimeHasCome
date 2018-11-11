@@ -21,42 +21,51 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/menubar">
 
-        <Button
+        <ImageButton
             android:id="@+id/checklist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/checklist"
-            android:onClick="onClick_ch"/>
+            android:src="@drawable/checklist"
+            android:background="@android:color/transparent"
+            android:onClick="onClick_check"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/diary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/diary" />
+            android:src="@drawable/diary"
+            android:background="@android:color/transparent"
+            android:onClick="onClick_diary"
+            android:clickable="true"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/home" />
+            android:src="@drawable/home"
+            android:background="@android:color/transparent"
+            android:onClick="onClick_home" />
 
-        <Button
+        <ImageButton
             android:id="@+id/camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/camera" />
+            android:src="@drawable/camera"
+            android:background="@android:color/transparent"
+            android:onClick="onClick_camera"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/account"
-            android:onClick="onClick_ac"/>
+            android:src="@drawable/card"
+            android:background="@android:color/transparent"
+            android:onClick="onClick_account"/>
 
     </LinearLayout>
 </RelativeLayout>

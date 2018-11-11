@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.nbang.nbangtravel.CheckableLinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants">
+
+    <CheckBox
+        android:id="@+id/item_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:focusable="false"
+        android:clickable="false"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/item_list"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="TEXT ITEM LIST Example"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_weight="5" />
+
+    <ImageButton
+        android:id="@+id/item_del"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:src="@drawable/delete"
+        android:background="@android:color/transparent"/>
+
+</com.example.nbang.nbangtravel.CheckableLinearLayout>
