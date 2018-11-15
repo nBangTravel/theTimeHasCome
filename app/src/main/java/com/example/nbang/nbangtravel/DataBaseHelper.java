@@ -10,42 +10,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "db";
 
-    public static final String TEXT_TYPE = "TEXT";
-    public static final String COMMA_SEP = ",";
-
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + Sample_CheckList.ConstantEntry.TABLE_NAME + " (" +
-                    Sample_CheckList.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
-                    Sample_CheckList.ConstantEntry.COLUMN_NAME_TITLE + " " + TEXT_TYPE + ")";
-
-    private static final String SQL_DELETE_ENTRIES =
-            "DROP TABLE IF EXISTS " + Sample_CheckList.ConstantEntry.TABLE_NAME;
-
+    //Constructor
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //this db is only a cache for online data, so its upgrade policy is
-        //to simply to discard the data and start over
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
-    }
-
+    //최초 DB생성시 한 번만 호출
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
-
-        //initialize the table with five rows
-        // Create a new map of values, where column names are the keys
+        db.execSQL("CREATE TABLE " + CheckListContract.ConstantEntry.TABLE_NAME + " (" +
+                CheckListContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
+                CheckListContract.ConstantEntry.COLUMN_NAME_TITLE + " " + "TEXT" + ")");
         ContentValues cv = new ContentValues();
 
-        cv.put(Sample_CheckList.ConstantEntry.COLUMN_NAME_TITLE, Sample_CheckList.first);
-        db.insert(Sample_CheckList.ConstantEntry.TABLE_NAME, Sample_CheckList.ConstantEntry.COLUMN_NAME_TITLE, cv);
+        cv.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.first);
+        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv);
 
-        cv.put(Sample_CheckList.ConstantEntry.COLUMN_NAME_TITLE, Sample_CheckList.second);
-        db.insert(Sample_CheckList.ConstantEntry.TABLE_NAME, Sample_CheckList.ConstantEntry.COLUMN_NAME_TITLE, cv);
+        cv.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.second);
+        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv);
 
     }
 
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        onUpgrade(db, oldVersion, newVersion);
+    }
+    //버전 업데이트 되었을 경우 디비 재생성
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + CheckListContract.ConstantEntry.TABLE_NAME);
+        onCreate(db);
+    }
 }

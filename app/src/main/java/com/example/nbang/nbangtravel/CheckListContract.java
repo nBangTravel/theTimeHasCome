@@ -1,9 +1,9 @@
 package com.example.nbang.nbangtravel;
 
 import android.provider.BaseColumns;
-
-public class Sample_CheckList {
-    public Sample_CheckList() {}
+//데이터베이스 : 실제 테이블 저장하는 곳
+public final class CheckListContract {
+    private CheckListContract() {}
 
     /* package scope constants are defined */
     public static String first = "커피마시기";
