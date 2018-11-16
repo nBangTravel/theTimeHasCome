@@ -41,9 +41,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick_home(View view){
-        //TODO: Home, First_Default & Default
+        Intent intent = new Intent(view.getContext(), HomeActivity.class);
+        startActivity(intent);
     }
-
 
     public void onClick_camera(View view){
         Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
