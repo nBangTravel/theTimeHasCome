@@ -1,9 +1,13 @@
 package com.example.nbang.nbangtravel;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +44,13 @@ public class MainActivity extends AppCompatActivity {
         //TODO: Home, First_Default & Default
     }
 
+
     public void onClick_camera(View view){
-        //TODO: Camera Intent
+        Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
+        startActivity(intent);
+        DiaryCreateActivity.checks = 1;
     }
+
 
 
 }

@@ -54,7 +54,8 @@
                 android:src="@drawable/camera"
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:onClick="onClickcamera"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
