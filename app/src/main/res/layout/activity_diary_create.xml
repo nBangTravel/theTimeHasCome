@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/diary_create_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_above="@+id/diary_create_date">
+
+            <TextView
+                android:id="@+id/title_diary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/diary"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendar"
+                android:background="@android:color/transparent"
+                android:onClick="showDatePickerDialog"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/album"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/camera"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/add_circle"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:textSize="15sp"
+            android:text="2018-03-23"/>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="500dp">
+
+            <ImageView
+                android:id="@+id/diary_create_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/diary_create_content"
+                android:src="@mipmap/diary_sample" />
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="내용을 입력해주세요."/>
+
+        </LinearLayout>
+
+
+</ScrollView>

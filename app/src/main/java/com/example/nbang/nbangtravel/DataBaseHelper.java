@@ -15,19 +15,39 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //최초 DB생성시 한 번만 호출
+    //최초 DB생성 시 한 번만 호출
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        /*CHECKLIST*/
         db.execSQL("CREATE TABLE " + CheckListContract.ConstantEntry.TABLE_NAME + " (" +
                 CheckListContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
                 CheckListContract.ConstantEntry.COLUMN_NAME_TITLE + " " + "TEXT" + ")");
-        ContentValues cv = new ContentValues();
+        ContentValues cv_check = new ContentValues();
 
-        cv.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.first);
-        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv);
+        cv_check.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.first);
+        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv_check);
 
-        cv.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.second);
-        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv);
+        cv_check.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.second);
+        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv_check);
+
+        /*DIARY*/
+        db.execSQL("CREATE TABLE " + DiaryContract.ConstantEntry.TABLE_NAME + " (" +
+                DiaryContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
+                DiaryContract.ConstantEntry.COLUMN_NAME_DATE + " " + "DATE, " +
+                DiaryContract.ConstantEntry.COLUMN_NAME_TITLE + " " + "TEXT" + ")");
+        ContentValues cv_diary = new ContentValues();
+
+        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.FIRST_DIARY);
+        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "여행 출바알~!");
+        db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
+
+        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.SECOND_DIARY);
+        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "함부르크 최고<3");
+        db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
+
+
+
 
     }
 

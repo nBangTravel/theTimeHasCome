@@ -3,13 +3,13 @@ package com.example.nbang.nbangtravel;
 import android.view.View;
 import android.widget.EditText;
 
-public class AddEditActivity {
+class ChecklistAddActivity {
 
     EditText titleField = null;
 
     View base = null;
 
-    AddEditActivity(View base) {
+    ChecklistAddActivity(View base) {
         this.base = base;
     }
 

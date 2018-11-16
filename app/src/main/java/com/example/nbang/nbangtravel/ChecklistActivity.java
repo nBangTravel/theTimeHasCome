@@ -1,8 +1,6 @@
 package com.example.nbang.nbangtravel;
 
-
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -10,8 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,7 +19,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-
 public class ChecklistActivity extends Fragment {
 
     private SQLiteDatabase db = null;
@@ -32,11 +27,10 @@ public class ChecklistActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         db = (new DataBaseHelper(getContext())).getWritableDatabase();
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
                " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
-                " ORDER BY " + CheckListContract.ConstantEntry._ID, null);
+                " ORDER BY " + CheckListContract.ConstantEntry._ID + " DESC", null);
 
         final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,
                 new String[] {CheckListContract.ConstantEntry.COLUMN_NAME_TITLE},
@@ -53,24 +47,6 @@ public class ChecklistActivity extends Fragment {
                 addList();
             }
         });
-
-        /*View convertView = inflater.inflate(R.layout.listview_checklist, container, false);
-        ImageButton del = (ImageButton) convertView.findViewById(R.id.item_del);//
-        int current = constantsCursor.getPosition();
-        del.setTag(current);
-
-        del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //View parentRow = (View) view.getParent();
-                //ListView nListView = (ListView)parentRow.getParent();
-                long position = listView.getPositionForView((View) view.getParent());
-
-                deleteList(position);
-            }
-        });*/
-
-
         return view;
     }
 
@@ -81,12 +57,10 @@ public class ChecklistActivity extends Fragment {
         db.close();
     }
 
-
-
     public void addList() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
-        View addView = inflater.inflate(R.layout.add_edit, null);
-        final AddEditActivity wrapper = new AddEditActivity(addView);
+        View addView = inflater.inflate(R.layout.checklist_add, null);
+        final ChecklistAddActivity wrapper = new ChecklistAddActivity(addView);
 
         new AlertDialog.Builder(getContext()).setTitle("할 일 추가하기").setView(addView).setPositiveButton("추가", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -99,14 +73,13 @@ public class ChecklistActivity extends Fragment {
         }).show();
     }
 
-    private void processAdd(AddEditActivity wrapper) {
+    private void processAdd(ChecklistAddActivity wrapper) {
         ContentValues values = new ContentValues(2);
-
         values.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, wrapper.getTitle());
         db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, values);
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
-                " ORDER BY " + CheckListContract.ConstantEntry._ID, null);
+                " ORDER BY " + CheckListContract.ConstantEntry._ID + " DESC", null);
 
         ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,
                 new String[] {CheckListContract.ConstantEntry.COLUMN_NAME_TITLE},
@@ -123,7 +96,6 @@ public class ChecklistActivity extends Fragment {
         long position = nListView.getPositionForView(parentRow);
         deleteList(position);
     }*/
-
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.add(Menu.NONE,DELETE_ID, Menu.NONE, "삭제").setIcon(R.drawable.delete).setAlphabeticShortcut('d');
@@ -159,7 +131,7 @@ public class ChecklistActivity extends Fragment {
         db.delete(CheckListContract.ConstantEntry.TABLE_NAME, "_ID=?", args);
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
-                " ORDER BY " + CheckListContract.ConstantEntry._ID, null);
+                " ORDER BY " + CheckListContract.ConstantEntry._ID + " DESC", null);
 
         ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,
                 new String[] {CheckListContract.ConstantEntry.COLUMN_NAME_TITLE},

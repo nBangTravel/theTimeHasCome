@@ -9,39 +9,38 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         ChecklistActivity checklistActivity = new ChecklistActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, checklistActivity).addToBackStack(null).commit();
     }
 
-    protected void onClick_account(View view){
+    public void onClick_account(View view){
         AccountActivity accountActivity = new AccountActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, accountActivity).addToBackStack(null).commit();
     }
 
-    protected void onClick_check(View view){
+    public void onClick_check(View view){
         ChecklistActivity checklistActivity = new ChecklistActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, checklistActivity).addToBackStack(null).commit();
     }
 
-    protected void onClick_diary(View view){
+    public void onClick_diary(View view){
         DiaryActivity diaryActivity = new DiaryActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, diaryActivity).addToBackStack(null).commit();
     }
 
-    protected void onClick_home(View view){
+    public void onClick_home(View view){
         //TODO: Home, First_Default & Default
     }
 
-    protected void onClick_camera(View view){
+    public void onClick_camera(View view){
         //TODO: Camera Intent
     }
 
