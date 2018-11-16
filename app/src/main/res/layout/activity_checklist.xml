@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:id="@+id/title_checklist"
@@ -12,15 +13,13 @@
         android:text="@string/checklist"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="8dp" />
 
-        />
-
-    <TextView
+    <ListView
         android:id="@+id/list_checklist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="40sp"
+        android:layout_height="541dp"
+        android:layout_marginTop="48sp"
         android:choiceMode="multipleChoice" />
 
     <android.support.design.widget.FloatingActionButton
@@ -34,8 +33,5 @@
         app:backgroundTint="#ffffff"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp"/>
-
-
-
 
 </FrameLayout>

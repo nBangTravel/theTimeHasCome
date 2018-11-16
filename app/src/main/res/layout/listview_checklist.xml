@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.example.nbang.nbangtravel.CheckableLinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -10,25 +10,33 @@
         android:id="@+id/item_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:focusable="false"
-        android:clickable="false"
-        android:layout_weight="1" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        android:layout_alignParentLeft="true"
+        android:focusable="true" />
 
     <TextView
         android:id="@+id/item_list"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="TEXT ITEM LIST Example"
-        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/item_checkbox"
         android:gravity="center"
-        android:layout_weight="5" />
+        android:textSize="20sp"
+        android:layout_toRightOf="@+id/item_checkbox" />
 
-    <ImageButton
+    <!--<ImageButton
         android:id="@+id/item_del"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
         android:src="@drawable/delete"
-        android:background="@android:color/transparent"/>
+        android:clickable="true"
+        android:layout_alignParentRight="true"
+        android:focusableInTouchMode="false"
+        android:focusable="true" />-->
 
-</com.example.nbang.nbangtravel.CheckableLinearLayout>
+</RelativeLayout>
