@@ -65,7 +65,6 @@ public class DiaryActivity extends Fragment{
     }
 
     public void createDiary(View view) {
-        //TODO: 작성화면 xml 뿌리기, 입력받은 데이터를 테이블에 추가하기.
         Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
         startActivity(intent);
     }
@@ -78,6 +77,7 @@ public class DiaryActivity extends Fragment{
 
         return super.onContextItemSelected(item);
     }
+
 
     public void showDiary(View view, long id) {
         //TODO: 겟 한 로우 아이디로 데베에서 내용을 가져와 xml에 뿌려준다. (작성된 다이어리 화면으로 이동)

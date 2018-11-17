@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.DatePicker;
@@ -19,9 +20,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.InputStream;
+import java.util.Date;
 
 
-public class DiaryCreateActivity extends AppCompatActivity {
+public class DiaryCreateActivity extends AppCompatActivity implements DatePickerFragment.OnCompleteListener {
 
     private SQLiteDatabase db = null;
     private Cursor constantsCursor = null;
@@ -29,6 +31,16 @@ public class DiaryCreateActivity extends AppCompatActivity {
     public static int checks = 0;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private final int GALLERY_CODE=1112;
+    private String date;
+    private int DATE_REQ_CODE;
+
+    public void onComplete(String date) {
+        // After the dialog fragment completes, it calls this callback.
+        // use the string here
+        TextView textView = (TextView) findViewById(R.id.diary_create_date);
+        textView.setText(date);
+
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,21 +52,13 @@ public class DiaryCreateActivity extends AppCompatActivity {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); }
             checks = 0;
         }
+
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
-        String date=DatePickerFragment.selectedDate;
-        getDate(date);
-    }
-
-    public void getDate(String date) {
-        //TODO: 선택된 날짜 TextView에 넣기!
-
-        TextView textView = (TextView) findViewById(R.id.diary_create_date);
-        textView.setText(date);
     }
 
     public void selectGallery(View view) {

@@ -36,9 +36,9 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/calendar"
                 android:background="@android:color/transparent"
-                android:onClick="showDatePickerDialog"
                 android:layout_gravity="bottom"
                 android:layout_marginRight="8dp"
+                android:onClick="showDatePickerDialog"
                 />
 
             <ImageButton
@@ -85,7 +85,8 @@
             android:layout_marginLeft="8dp"
             android:textSize="15sp"
             android:hint="날짜를 선택해주세요"
-            android:importantForAutofill="auto"
+            android:focusable="false"
+            android:onClick="calendar_onclick"
             />
 
         <LinearLayout
