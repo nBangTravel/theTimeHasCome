@@ -45,10 +45,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.SECOND_DIARY);
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "함부르크 최고<3");
         db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
-
-
-
-
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

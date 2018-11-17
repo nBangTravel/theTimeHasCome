@@ -12,14 +12,21 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    static int check_ac = 0;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ChecklistActivity checklistActivity = new ChecklistActivity();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, checklistActivity).addToBackStack(null).commit();
+        if(check_ac == 1){
+            AccountActivity accountActivity = new AccountActivity();
+            FragmentTransaction transaction_ac = getSupportFragmentManager().beginTransaction();
+            transaction_ac.replace(R.id.fragment_container, accountActivity).addToBackStack(null).commit();
+            check_ac = 0;
+        }else{
+            ChecklistActivity checklistActivity = new ChecklistActivity();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_container, checklistActivity).addToBackStack(null).commit(); }
     }
 
     public void onClick_account(View view){
