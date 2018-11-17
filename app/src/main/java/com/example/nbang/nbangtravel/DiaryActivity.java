@@ -20,8 +20,8 @@ import android.widget.SimpleCursorAdapter;
 
 public class DiaryActivity extends Fragment{
 
-    private SQLiteDatabase db = null;
-    private Cursor constantsCursor = null;
+    private static SQLiteDatabase db = null;
+    private static Cursor constantsCursor = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class DiaryActivity extends Fragment{
                 DiaryContract.ConstantEntry.COLUMN_NAME_DATE + ", " +
                 DiaryContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
-                " ORDER BY " + DiaryContract.ConstantEntry._ID, null);
+                " ORDER BY " + DiaryContract.ConstantEntry._ID + " DESC", null);
 
         final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_diary, constantsCursor,
                 new String[] {DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.ConstantEntry.COLUMN_NAME_TITLE},
@@ -74,14 +74,16 @@ public class DiaryActivity extends Fragment{
     public boolean onContextItemSelected(MenuItem item) {
         //TODO: 선택된 로우 아이디 겟
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
-        showDiary(info.id);
+        showDiary(getView(), info.id);
 
         return super.onContextItemSelected(item);
     }
 
-    public void showDiary(long id) {
+    public void showDiary(View view, long id) {
         //TODO: 겟 한 로우 아이디로 데베에서 내용을 가져와 xml에 뿌려준다. (작성된 다이어리 화면으로 이동)
-        //DiaryLookActivity 에 구현해야하나...?
+        Intent intent = new Intent(view.getContext(), DiaryLookActivity.class);
+        startActivity(intent);
     }
+
 
 }

@@ -11,4 +11,16 @@ public class DiaryLookActivity extends Activity {
         setContentView(R.layout.activity_diary_look);
     }
 
+    public void delete() {
+
+    }
+
+    public void edit() {
+
+    }
+
+    public void share() {
+
+    }
+
 }

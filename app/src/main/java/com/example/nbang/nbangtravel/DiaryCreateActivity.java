@@ -1,5 +1,6 @@
 package com.example.nbang.nbangtravel;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,10 +12,12 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
 
@@ -31,7 +34,6 @@ public class DiaryCreateActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_create);
-        Intent intent = getIntent();
         if(checks == 1){
             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -43,18 +45,16 @@ public class DiaryCreateActivity extends AppCompatActivity {
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+
+        String date=DatePickerFragment.selectedDate;
+        getDate(date);
     }
 
-    public void createDiary() {
-        //TODO: 저장하기
-    }
+    public void getDate(String date) {
+        //TODO: 선택된 날짜 TextView에 넣기!
 
-    public void openGallery() {
-
-    }
-
-    public void cameraIntent() {
-
+        TextView textView = (TextView) findViewById(R.id.diary_create_date);
+        textView.setText(date);
     }
 
     public void selectGallery(View view) {
@@ -76,7 +76,7 @@ public class DiaryCreateActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView)findViewById(R.id.diary_create_picture)).setImageBitmap(imageBitmap);
+            ((ImageView) findViewById(R.id.diary_create_picture)).setImageBitmap(imageBitmap);
         }
         else if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
             InputStream in = null;
@@ -91,7 +91,17 @@ public class DiaryCreateActivity extends AppCompatActivity {
         }
     }
 
-    public void save(){
+    public void save(View view){
+        ContentValues values = new ContentValues(4);
+        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.diary_create_date)).getText().toString());
+        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(R.id.diary_create_title)).getText().toString());
+        //values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, DataBaseHelper.getBite(R.id.diary_create_picture));
+        //TODO: EOROROROR
+        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(R.id.diary_create_content)).getText().toString());
 
+        db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, values);
+        //저장 메세지 띄워주기
+        Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
     }
+
 }

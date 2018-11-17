@@ -74,7 +74,7 @@ public class ChecklistActivity extends Fragment {
     }
 
     private void processAdd(ChecklistAddActivity wrapper) {
-        ContentValues values = new ContentValues(2);
+        ContentValues values = new ContentValues(1);
         values.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, wrapper.getTitle());
         db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, values);
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +

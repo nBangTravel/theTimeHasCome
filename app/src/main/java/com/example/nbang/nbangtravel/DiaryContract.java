@@ -23,4 +23,7 @@ public class DiaryContract {
         //내용
         public static final String COLUMN_NAME_CONTENT = "content";
     }
+
+
+
 }
