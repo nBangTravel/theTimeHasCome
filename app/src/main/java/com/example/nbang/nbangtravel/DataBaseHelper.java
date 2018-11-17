@@ -47,7 +47,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE + " BLOB,"+
                 DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT + " TEXT" +")");
         ContentValues cv_diary = new ContentValues();
-
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.FIRST_DIARY);
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "여행 출바알~!");
         //cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, getBite(R.mipmap.first_diary));
@@ -60,6 +59,22 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, "함부르크 또가고싶다. 함부르크 최고다 종강은 언제할까");
         db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
 
+        /*Accounting Book*/
+        db.execSQL("CREATE TABLE " + AccountingContract.ConstantEntry.TABLE_NAME + " (" +
+                AccountingContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
+                AccountingContract.ConstantEntry.COLUMN_NAME_DATE + " TEXT," +
+                AccountingContract.ConstantEntry.COLUMN_NAME_TITLE + " TEXT," +
+                AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR + " TEXT," +
+                AccountingContract.ConstantEntry.COLUMN_NAME_PRICE + " REAL,"+
+                AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY + " TEXT" +")");
+
+        ContentValues cv_accounting = new ContentValues();
+        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.FIRST_DIARY);
+        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, "빕스먹었다");
+        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, "김소영");
+        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, 35400);
+        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, "WON");
+        db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_DATE, cv_accounting);
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
