@@ -18,9 +18,7 @@ public class DiaryContract {
         public static final String TABLE_NAME = "diary";
         public static final String COLUMN_NAME_DATE = "date";
         public static final String COLUMN_NAME_TITLE = "title";
-        //사진 BLOB
         public static final String COLUMN_NAME_PICTURE = "picture";
-        //내용
         public static final String COLUMN_NAME_CONTENT = "content";
     }
 

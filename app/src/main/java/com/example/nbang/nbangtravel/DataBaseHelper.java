@@ -7,8 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.io.ByteArrayOutputStream;
 
@@ -46,16 +48,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DiaryContract.ConstantEntry.COLUMN_NAME_TITLE + " TEXT," +
                 DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE + " BLOB,"+
                 DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT + " TEXT" +")");
+
         ContentValues cv_diary = new ContentValues();
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.FIRST_DIARY);
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "여행 출바알~!");
-        //cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, getBite(R.mipmap.first_diary));
+        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, R.mipmap.first_diary);
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, "오늘은 여행을 출발했다. 빨리 종강했으면 좋겠다");
         db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
 
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.SECOND_DIARY);
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "함부르크 최고<3");
-        //cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, getBite(R.mipmap.second_diary));
+        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, R.mipmap.second_diary);
         cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, "함부르크 또가고싶다. 함부르크 최고다 종강은 언제할까");
         db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
 
@@ -86,11 +89,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-
-    /*public byte[] getBite(int resourceId) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resourceId);
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        return out.toByteArray();
-    }*/
 }

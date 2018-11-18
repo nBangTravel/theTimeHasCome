@@ -37,7 +37,8 @@
                 android:src="@drawable/delete"
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:onClick="ask_delete"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -58,6 +59,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/diary_look_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -65,6 +67,7 @@
             android:text="이 다이어리의 제목은 무엇일까요"/>
 
         <TextView
+            android:id="@+id/diary_look_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -76,7 +79,7 @@
             android:layout_height="500dp">
 
             <ImageView
-                android:id="@+id/diary_create_picture"
+                android:id="@+id/diary_look_picture"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/diary_create_content"
@@ -85,6 +88,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/diary_look_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다."/>

@@ -90,12 +90,6 @@ public class ChecklistActivity extends Fragment {
         listView.setAdapter(adapter);
     }
 
-    /*public void del_onclick(View view) {
-        View parentRow = (View) view.getParent();
-        ListView nListView = (ListView)parentRow.getParent();
-        long position = nListView.getPositionForView(parentRow);
-        deleteList(position);
-    }*/
 
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.add(Menu.NONE,DELETE_ID, Menu.NONE, "삭제").setIcon(R.drawable.delete).setAlphabeticShortcut('d');

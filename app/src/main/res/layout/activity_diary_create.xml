@@ -84,8 +84,9 @@
             android:layout_marginLeft="8dp"
             android:textSize="15sp"
             android:hint="날짜를 선택해주세요"
-            android:focusable="false"
-            android:onClick="calendar_onclick" />
+            android:focusable="false" />
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
