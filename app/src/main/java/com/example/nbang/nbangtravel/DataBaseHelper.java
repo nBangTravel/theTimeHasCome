@@ -33,13 +33,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + CheckListContract.ConstantEntry.TABLE_NAME + " (" +
                 CheckListContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
                 CheckListContract.ConstantEntry.COLUMN_NAME_TITLE + " " + "TEXT" + ")");
-        ContentValues cv_check = new ContentValues();
-
-        cv_check.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.first);
-        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv_check);
-
-        cv_check.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, CheckListContract.second);
-        db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, cv_check);
 
         /*DIARY*/
         db.execSQL("CREATE TABLE " + DiaryContract.ConstantEntry.TABLE_NAME + " (" +
@@ -49,19 +42,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE + " BLOB,"+
                 DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT + " TEXT" +")");
 
-        ContentValues cv_diary = new ContentValues();
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.FIRST_DIARY);
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "여행 출바알~!");
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, R.mipmap.first_diary);
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, "오늘은 여행을 출발했다. 빨리 종강했으면 좋겠다");
-        db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
-
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.SECOND_DIARY);
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, "함부르크 최고<3");
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, R.mipmap.second_diary);
-        cv_diary.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, "함부르크 또가고싶다. 함부르크 최고다 종강은 언제할까");
-        db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, cv_diary);
-
         /*Accounting Book*/
         db.execSQL("CREATE TABLE " + AccountingContract.ConstantEntry.TABLE_NAME + " (" +
                 AccountingContract.ConstantEntry._ID + " INTEGER PRIMARY KEY, " +
@@ -70,14 +50,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR + " TEXT," +
                 AccountingContract.ConstantEntry.COLUMN_NAME_PRICE + " REAL,"+
                 AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY + " TEXT" +")");
-
-        ContentValues cv_accounting = new ContentValues();
-        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.FIRST_DIARY);
-        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, "빕스먹었다");
-        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, "김소영");
-        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, 35400);
-        cv_accounting.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, "WON");
-        db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_DATE, cv_accounting);
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {

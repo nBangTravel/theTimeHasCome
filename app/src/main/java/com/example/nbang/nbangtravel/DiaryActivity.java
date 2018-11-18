@@ -58,6 +58,7 @@ public class DiaryActivity extends Fragment{
 
                 constantsCursor.moveToFirst();
                 intent.putExtra("this_ID", id);
+                DiaryLookActivity.ID = (int)id;
                 intent.putExtra("this_title", constantsCursor.getString(2));
                 intent.putExtra("this_date", constantsCursor.getString(1));
                 //얘는 너무 커서 별도의 프래그먼트가 전송해준다,,,

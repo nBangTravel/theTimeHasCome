@@ -57,11 +57,9 @@ public class AccountActivity extends Fragment{
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 id = adapter.getItemId(position);
                 Intent intent = new Intent(getActivity(), AccountLookActivity.class);
-
                 constantsCursor = db.rawQuery("SELECT " + "*" +
                         " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
                         " WHERE " + AccountingContract.ConstantEntry._ID + " = " + id, null);
-
                 constantsCursor.moveToFirst();
                 intent.putExtra("this_ID", id);
                 intent.putExtra("this_date", constantsCursor.getString(1));
@@ -69,7 +67,6 @@ public class AccountActivity extends Fragment{
                 intent.putExtra("this_participator", constantsCursor.getString(3));
                 intent.putExtra("this_price", constantsCursor.getInt(4));
                 intent.putExtra("this_currency", constantsCursor.getString(5));
-
                 startActivity(intent);
             }
         });

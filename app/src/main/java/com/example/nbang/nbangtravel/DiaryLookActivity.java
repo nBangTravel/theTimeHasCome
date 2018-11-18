@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import java.util.Objects;
 public class DiaryLookActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     private Cursor constantsCursor = null;
-    public static String ID;
+    public static int ID;
     private TooLargeDataFragment dataFragment;
     public static byte[] cc = null;
 
@@ -31,7 +32,6 @@ public class DiaryLookActivity extends AppCompatActivity {
         db = (new DataBaseHelper(this)).getWritableDatabase();
         Intent intent = getIntent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ID= Objects.requireNonNull(intent.getExtras()).getString("this_id"); //ERROR
             TextView title = (TextView) findViewById(R.id.diary_look_title);
             title.setText(intent.getExtras().getString("this_title"));
             TextView date = (TextView) findViewById(R.id.diary_look_date);
@@ -61,15 +61,12 @@ public class DiaryLookActivity extends AppCompatActivity {
     }
 
     public void delete() {
-
-        String[] args = {ID};
-        db.delete(DiaryContract.ConstantEntry.TABLE_NAME, "_ID=?", args);
+        db.delete(DiaryContract.ConstantEntry.TABLE_NAME, "_ID = " + ID, null );
         Toast.makeText(this, "삭제되었습니다.",Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this, DiaryActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         MainActivity.check_ac=88;
         startActivity(intent);
-
     }
 
     public void edit() {

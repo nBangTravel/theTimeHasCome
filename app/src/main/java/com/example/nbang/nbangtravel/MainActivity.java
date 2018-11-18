@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 DiaryActivity diaryActivity = new DiaryActivity();
                 FragmentTransaction transaction_di = getSupportFragmentManager().beginTransaction();
                 transaction_di.add(R.id.fragment_container, diaryActivity).addToBackStack(null).commit();
+                check_ac = 0;
                 break;
 
             default:
