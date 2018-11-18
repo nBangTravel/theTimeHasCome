@@ -1,6 +1,5 @@
 package com.example.nbang.nbangtravel;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,24 +7,23 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CursorAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 public class DiaryActivity extends Fragment{
 
     private static SQLiteDatabase db = null;
     private static Cursor constantsCursor = null;
-    public static final String DIARY_LOOK = "com.example.nbang.nbangtravel.diarylook";
+    private TooLargeDataFragment dataFragment;
+
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -45,36 +43,51 @@ public class DiaryActivity extends Fragment{
         listView.setAdapter(adapter);
 
 
+
         //TODO show diary
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 id = adapter.getItemId(position);
+
                 Intent intent = new Intent(getActivity(), DiaryLookActivity.class);
 
                 constantsCursor = db.rawQuery("SELECT " + "*" +
                         " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
                         " WHERE " + DiaryContract.ConstantEntry._ID + " = " + id, null);
 
-                Log.i("_ID id : ", ""+constantsCursor.getColumnIndex("_ID")); //-1
-                Log.i("title id : ", ""+constantsCursor.getColumnIndex("title")); //2
-                Log.i("date id : ", ""+constantsCursor.getColumnIndex("date")); //1
-                Log.i("picture id : ", ""+constantsCursor.getColumnIndex("picture"));//3
-                Log.i("content id : ", ""+constantsCursor.getColumnIndex("content"));//4
-
                 constantsCursor.moveToFirst();
                 intent.putExtra("this_ID", id);
                 intent.putExtra("this_title", constantsCursor.getString(2));
                 intent.putExtra("this_date", constantsCursor.getString(1));
-                intent.putExtra("this_picture", constantsCursor.getBlob(3));
+                //얘는 너무 커서 별도의 프래그먼트가 전송해준다,,,
+                //intent.putExtra("this_picture", constantsCursor.getBlob(3));
+                DiaryLookActivity.cc = constantsCursor.getBlob(3);
                 intent.putExtra("this_content", constantsCursor.getString(4));
 
                //TODO ERROR
                 startActivity(intent);
 
+                /*FragmentManager fm = getFragmentManager();
+                dataFragment = (TooLargeDataFragment) fm.findFragmentByTag("data");
+
+
+                Bundle bundle = new Bundle(1);
+
+                dataFragment.setArguments(bundle);*/
             }
         });
 
+ /*       FragmentManager fm = getFragmentManager();
+        dataFragment = (TooLargeDataFragment) fm.findFragmentByTag("data");
+        if (dataFragment == null) {
+            // add the fragment
+            dataFragment = new TooLargeDataFragment();
+            fm.beginTransaction().add(dataFragment, "data").commit();
+            // load the data from the web
+            dataFragment.setData(loadMyData());
+        }
+*/
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
