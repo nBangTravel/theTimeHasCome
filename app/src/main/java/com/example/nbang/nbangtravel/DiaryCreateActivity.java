@@ -2,7 +2,6 @@ package com.example.nbang.nbangtravel;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,19 +10,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.util.Date;
-
 
 public class DiaryCreateActivity extends AppCompatActivity implements DatePickerFragment.OnCompleteListener {
 
@@ -111,5 +104,4 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
         return  out.toByteArray();
     }
-
 }

@@ -8,21 +8,16 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import java.util.Objects;
 
 public class DiaryLookActivity extends AppCompatActivity {
     private SQLiteDatabase db;
-    private Cursor constantsCursor = null;
     public static int ID;
-    private TooLargeDataFragment dataFragment;
     public static byte[] cc = null;
 
     @Override

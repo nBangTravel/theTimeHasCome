@@ -13,7 +13,6 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -51,7 +50,6 @@ public class AccountActivity extends Fragment{
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
 
-        //TODO show diary
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -70,7 +68,6 @@ public class AccountActivity extends Fragment{
                 startActivity(intent);
             }
         });
-
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add2);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

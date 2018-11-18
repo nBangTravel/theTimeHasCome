@@ -13,14 +13,9 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AccountCreateActivity extends AppCompatActivity implements DatePickerFragment.OnCompleteListener{
-
 
     private DataBaseHelper dbHelper = null;
     private Cursor constantsCursor = null;
@@ -34,28 +29,23 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         init_tables();
 
         final LinearLayout listC = (LinearLayout) findViewById(R.id.listcontainer);
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
         for (int j = 0; j < AccountActivity.listItemsac.size(); j++) {
             LinearLayout ll = new LinearLayout(this);
             ll.setOrientation(LinearLayout.HORIZONTAL);
-
             TextView participator = new TextView(this);
             participator.setText(AccountActivity.listItemsac.get(j));
             ll.addView(participator);
-
             CheckBox participation = new CheckBox(this);
             participation.setId(j);
             participation.setTag(AccountActivity.listItemsac.get(j));
             ll.addView(participation);
             participation.setOnCheckedChangeListener(handleCheck(participation));
-
             ed[j] = new EditText(this);
             ed[j].setId(j);
             ed[j].setHint("가격을 입력해주세요");
             ll.addView(ed[j]);
-
             listC.addView(ll);
         }
     }
@@ -69,7 +59,6 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         dbHelper = new DataBaseHelper(this);
     }
 
-    //TODO 해야돼애애애 여기서부터 해애애애 editText받아오는거
     public void onClickac(View view){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         EditText title = (EditText) findViewById(R.id.editText2);
@@ -89,7 +78,6 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         startActivity(intent);
         MainActivity.check_ac = 1;
     }
-
 
     private CompoundButton.OnCheckedChangeListener handleCheck (final CheckBox chb) {
         return new CompoundButton.OnCheckedChangeListener() {

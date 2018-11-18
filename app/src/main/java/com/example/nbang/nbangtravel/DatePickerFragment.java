@@ -5,9 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.DatePicker;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -16,9 +14,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public static String date= null;
     private OnCompleteListener mListener;
 
-    public static interface OnCompleteListener {
-        public abstract void onComplete(String date);}
-
+    public interface OnCompleteListener {
+        void onComplete(String date);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -41,11 +39,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     @Override
     public void onDateSet(DatePicker view, int year, int month, int day) {
         month = month + 1;
-//        Log.i("HERE IS THE DATE!!!!", "year "+year);
-//        Log.i("HERE IS THE DATE!!!!", "month "+month);
-//        Log.i("HERE IS THE DATE!!!!", "day "+day);
         date = year + "-"+month + "-" +day;
-//        Log.i("TESt", date);
         this.mListener.onComplete(date);
     }
 }

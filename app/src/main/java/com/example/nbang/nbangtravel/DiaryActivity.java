@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +21,6 @@ public class DiaryActivity extends Fragment{
 
     private static SQLiteDatabase db = null;
     private static Cursor constantsCursor = null;
-    private TooLargeDataFragment dataFragment;
-
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
@@ -42,9 +39,6 @@ public class DiaryActivity extends Fragment{
         final ListView listView = (ListView) view.findViewById(R.id.list_diarylist);
         listView.setAdapter(adapter);
 
-
-
-        //TODO show diary
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -61,34 +55,14 @@ public class DiaryActivity extends Fragment{
                 DiaryLookActivity.ID = (int)id;
                 intent.putExtra("this_title", constantsCursor.getString(2));
                 intent.putExtra("this_date", constantsCursor.getString(1));
-                //얘는 너무 커서 별도의 프래그먼트가 전송해준다,,,
-                //intent.putExtra("this_picture", constantsCursor.getBlob(3));
                 DiaryLookActivity.cc = constantsCursor.getBlob(3);
                 intent.putExtra("this_content", constantsCursor.getString(4));
 
-               //TODO ERROR
                 startActivity(intent);
 
-                /*FragmentManager fm = getFragmentManager();
-                dataFragment = (TooLargeDataFragment) fm.findFragmentByTag("data");
-
-
-                Bundle bundle = new Bundle(1);
-
-                dataFragment.setArguments(bundle);*/
             }
         });
 
- /*       FragmentManager fm = getFragmentManager();
-        dataFragment = (TooLargeDataFragment) fm.findFragmentByTag("data");
-        if (dataFragment == null) {
-            // add the fragment
-            dataFragment = new TooLargeDataFragment();
-            fm.beginTransaction().add(dataFragment, "data").commit();
-            // load the data from the web
-            dataFragment.setData(loadMyData());
-        }
-*/
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -103,7 +77,6 @@ public class DiaryActivity extends Fragment{
         new AlertDialog.Builder(getContext()).setTitle("새 다이어리를 작성하시겠습니까?").setPositiveButton("네", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 createDiary(getView());
-
                 Log.i("check", "WORKING1");
             }
         }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
@@ -117,5 +90,4 @@ public class DiaryActivity extends Fragment{
         Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
         startActivity(intent);
     }
-
 }

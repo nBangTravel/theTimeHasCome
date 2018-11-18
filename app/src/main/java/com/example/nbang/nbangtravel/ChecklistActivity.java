@@ -61,7 +61,6 @@ public class ChecklistActivity extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View addView = inflater.inflate(R.layout.checklist_add, null);
         final ChecklistAddActivity wrapper = new ChecklistAddActivity(addView);
-
         new AlertDialog.Builder(getContext()).setTitle("할 일 추가하기").setView(addView).setPositiveButton("추가", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 processAdd(wrapper);
@@ -90,12 +89,11 @@ public class ChecklistActivity extends Fragment {
         listView.setAdapter(adapter);
     }
 
-
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         menu.add(Menu.NONE,DELETE_ID, Menu.NONE, "삭제").setIcon(R.drawable.delete).setAlphabeticShortcut('d');
 
     }
-    //삭제 실행시 꾹 누르면 됨
+
     public boolean onContextItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case DELETE_ID:
