@@ -51,6 +51,29 @@ public class AccountActivity extends Fragment{
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
 
+        //TODO show diary
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                id = adapter.getItemId(position);
+                Intent intent = new Intent(getActivity(), AccountLookActivity.class);
+
+                constantsCursor = db.rawQuery("SELECT " + "*" +
+                        " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
+                        " WHERE " + AccountingContract.ConstantEntry._ID + " = " + id, null);
+
+                constantsCursor.moveToFirst();
+                intent.putExtra("this_ID", id);
+                intent.putExtra("this_date", constantsCursor.getString(1));
+                intent.putExtra("this_title", constantsCursor.getString(2));
+                intent.putExtra("this_participator", constantsCursor.getString(3));
+                intent.putExtra("this_price", constantsCursor.getInt(4));
+                intent.putExtra("this_currency", constantsCursor.getString(5));
+
+                startActivity(intent);
+            }
+        });
+
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add2);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

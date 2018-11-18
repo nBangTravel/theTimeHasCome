@@ -28,7 +28,6 @@ import java.io.InputStream;
 import java.util.Objects;
 
 public class DiaryLookActivity extends AppCompatActivity {
-    public static int SHOW_DIARY = 0;
     private SQLiteDatabase db;
     private Cursor constantsCursor = null;
     public static String ID;
@@ -58,9 +57,6 @@ public class DiaryLookActivity extends AppCompatActivity {
             }
             picture.setImageBitmap(b);
         }
-        //TODO:
-        SHOW_DIARY = 0;
-
     }
 
     public void ask_delete(View view) {
@@ -80,6 +76,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         db.delete(DiaryContract.ConstantEntry.TABLE_NAME, "_ID=?", args);
         Toast.makeText(this, "삭제되었습니다.",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, DiaryActivity.class);
+        MainActivity.check_ac=88;
         startActivity(intent);
     }
 
@@ -87,5 +84,4 @@ public class DiaryLookActivity extends AppCompatActivity {
         //TODO
         //intent 로 화면을 create로 바꿔주고, 원래 내용 띄우기
     }
-
 }

@@ -14,7 +14,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_above="@+id/diary_create_date">
+            android:layout_above="@+id/diary_look_title">
 
             <TextView
                 android:id="@+id/title_diary"

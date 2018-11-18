@@ -22,6 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".DiaryLookActivity" />
+        <activity android:name=".AccountLookActivity" />
         <activity android:name=".DiaryCreateActivity" />
         <activity android:name=".AccountCreateActivity" />
         <activity android:name=".HomeActivity" />
