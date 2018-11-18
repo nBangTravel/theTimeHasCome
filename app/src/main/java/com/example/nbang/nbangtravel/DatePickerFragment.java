@@ -14,12 +14,10 @@ import java.util.Calendar;
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
     public static String date= null;
+    private OnCompleteListener mListener;
 
     public static interface OnCompleteListener {
-        public abstract void onComplete(String date);
-    }
-
-    private OnCompleteListener mListener;
+        public abstract void onComplete(String date);}
 
     // make sure the Activity implemented it
     @Override
@@ -27,10 +25,8 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         super.onAttach(activity);
         try {
             this.mListener = (OnCompleteListener)activity;
-        }
-        catch (final ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement OnCompleteListener");
-        }
+        } catch (final ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement OnCompleteListener"); }
     }
 
     @Override
@@ -54,6 +50,5 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         date = year + " 년  "+month + " 월  " +day+" 일";
         Log.i("TESt", date);
         this.mListener.onComplete(date);
-
     }
 }

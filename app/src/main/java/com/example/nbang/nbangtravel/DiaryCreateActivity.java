@@ -52,13 +52,11 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); }
             checks = 0;
         }
-
     }
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
-
     }
 
     public void selectGallery(View view) {
