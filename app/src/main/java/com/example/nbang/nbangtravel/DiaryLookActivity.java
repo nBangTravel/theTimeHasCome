@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.ByteArrayOutputStream;
 
 public class DiaryLookActivity extends AppCompatActivity {
     private SQLiteDatabase db;
@@ -64,7 +67,22 @@ public class DiaryLookActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void edit() {
+    public void edit(View view) {
         //intent 로 화면을 create로 바꿔주고, 원래 내용 띄우기
+        Intent editIntent = new Intent(view.getContext(), DiaryCreateActivity.class);
+        DiaryCreateActivity.checks=80;
+        editIntent.putExtra("this_ID", DiaryLookActivity.ID);
+        TextView title = (TextView) findViewById(R.id.diary_look_title);
+        editIntent.putExtra("this_title", title.getText());
+        TextView date = (TextView) findViewById(R.id.diary_look_date);
+        editIntent.putExtra("this_date", date.getText());
+        ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
+        Bitmap bitmap = ((BitmapDrawable) picture.getDrawable()).getBitmap();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        DiaryCreateActivity.getByteArr = out.toByteArray();
+        TextView content = (TextView) findViewById(R.id.diary_look_content);
+        editIntent.putExtra("this_content", content.getText());
+        startActivity(editIntent);
     }
 }

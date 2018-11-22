@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
@@ -24,6 +25,10 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     public static int checks = 0;
     static final int REQUEST_IMAGE_CAPTURE = 1;
     private final int GALLERY_CODE=1112;
+    public static byte[] getByteArr = null;
+    public static int editId;
+
+
 
     public void onComplete(String date) {
         TextView textView = (TextView) findViewById(R.id.diary_create_date);
@@ -40,6 +45,25 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE); }
             checks = 0;
+        }
+        if (checks == 80) {
+            Intent editInent = getIntent();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                editId=editInent.getExtras().getInt("this_ID");
+                TextView title = (TextView) findViewById(R.id.diary_create_title);
+                title.setText(editInent.getExtras().getString("this_title"));
+                TextView date = (TextView) findViewById(R.id.diary_create_date);
+                date.setText(editInent.getExtras().getString("this_date"));
+                TextView content = (TextView) findViewById(R.id.diary_create_content);
+                content.setText(editInent.getExtras().getString("this_content"));
+                ImageView picture = (ImageView) findViewById(R.id.diary_create_picture);
+                //byte[] src = intent.getExtras().getByteArray("this_picture");
+                Bitmap b = null;
+                if (getByteArr != null) {
+                    b = BitmapFactory.decodeByteArray(getByteArr, 0, getByteArr.length);
+                }
+                picture.setImageBitmap(b);
+            }
         }
     }
 
@@ -85,15 +109,20 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     public void save(View view){
         ImageView image = (ImageView)findViewById(R.id.diary_create_picture);
         Bitmap image_bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-
         ContentValues values = new ContentValues();
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.diary_create_date)).getText().toString());
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(R.id.diary_create_title)).getText().toString());
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, getBite(image_bitmap));
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(R.id.diary_create_content)).getText().toString());
-        db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, values);
-        Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
 
+        if(checks == 80) {
+            db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ editId, null);
+            Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show();
+            checks = 0;
+        } else {
+            db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, values);
+            Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
+        }
         Intent intent = new Intent(this, MainActivity.class);
         MainActivity.check_ac=88;
         startActivity(intent);

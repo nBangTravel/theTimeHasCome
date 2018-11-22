@@ -46,7 +46,8 @@
                 android:src="@drawable/edit"
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:onClick="edit"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
