@@ -12,7 +12,9 @@ class ChecklistAddActivity {
         this.base = base;
     }
 
-    String getTitle() { return getTitleField().getText().toString();}
+    String getTitle() {
+        return getTitleField().getText().toString();
+    }
 
     private EditText getTitleField() {
 

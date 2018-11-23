@@ -72,6 +72,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, AccountActivity.listItemsac.get(j));
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, Integer.parseInt(String.valueOf(ed[j].getText())));
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, "WON");
+            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
             db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, values);
         }
         Intent intent = new Intent(view.getContext(), MainActivity.class);

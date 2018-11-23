@@ -12,8 +12,6 @@ public class DiaryContract {
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_PICTURE = "picture";
         public static final String COLUMN_NAME_CONTENT = "content";
+        public static final String COLUMN_NAME_TRAVEL = "travelname";
     }
-
-
-
 }

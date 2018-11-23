@@ -29,7 +29,9 @@ public class ChecklistActivity extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         db = (new DataBaseHelper(getContext())).getWritableDatabase();
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
-               " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
+                " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + CheckListContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + CheckListContract.ConstantEntry._ID + " DESC", null);
 
         final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,
@@ -75,9 +77,12 @@ public class ChecklistActivity extends Fragment {
     private void processAdd(ChecklistAddActivity wrapper) {
         ContentValues values = new ContentValues(1);
         values.put(CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, wrapper.getTitle());
+        values.put(CheckListContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
         db.insert(CheckListContract.ConstantEntry.TABLE_NAME, CheckListContract.ConstantEntry.COLUMN_NAME_TITLE, values);
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + CheckListContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + CheckListContract.ConstantEntry._ID + " DESC", null);
 
         ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,
@@ -123,6 +128,8 @@ public class ChecklistActivity extends Fragment {
         db.delete(CheckListContract.ConstantEntry.TABLE_NAME, "_ID=?", args);
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + CheckListContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + CheckListContract.ConstantEntry._ID + " DESC", null);
 
         ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,

@@ -29,6 +29,8 @@ public class DiaryActivity extends Fragment{
                 DiaryContract.ConstantEntry.COLUMN_NAME_DATE + ", " +
                 DiaryContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + DiaryContract.ConstantEntry._ID + " DESC", null);
 
         final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_diary, constantsCursor,
@@ -59,7 +61,6 @@ public class DiaryActivity extends Fragment{
                 intent.putExtra("this_content", constantsCursor.getString(4));
 
                 startActivity(intent);
-
             }
         });
 
@@ -69,7 +70,6 @@ public class DiaryActivity extends Fragment{
                 addDiary();
             }
         });
-
         return view;
     }
 

@@ -4,20 +4,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Objects;
 
 public class AccountLookActivity extends AppCompatActivity {
 
     private SQLiteDatabase db;
     private Cursor constantsCursor = null;
-    public static String ID;
+    public static int ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -26,7 +31,6 @@ public class AccountLookActivity extends AppCompatActivity {
         db = (new DataBaseHelper(this)).getWritableDatabase();
         Intent intent = getIntent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ID = Objects.requireNonNull(intent.getExtras()).getString("this_id"); //ERROR
             TextView title = (TextView) findViewById(R.id.title);
             title.setText("제목: " + intent.getExtras().getString("this_title"));
             TextView date = (TextView) findViewById(R.id.date);
@@ -53,10 +57,14 @@ public class AccountLookActivity extends AppCompatActivity {
     }
 
     public void delete() {
-        //TODO
+        db.delete(AccountingContract.ConstantEntry.TABLE_NAME, "_ID = " + ID, null );
+        Toast.makeText(this, "삭제되었습니다.",Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(this, MainActivity.class);
+        MainActivity.check_ac=1;
+        startActivity(intent);
     }
 
-    public void edit() {
-        //TODO
+    public void edit(View view) {
     }
 }

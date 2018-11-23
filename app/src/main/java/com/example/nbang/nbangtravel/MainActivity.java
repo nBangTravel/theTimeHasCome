@@ -19,21 +19,21 @@ public class MainActivity extends AppCompatActivity {
             case 1:
                 AccountActivity accountActivity = new AccountActivity();
                 FragmentTransaction transaction_ac = getSupportFragmentManager().beginTransaction();
-                transaction_ac.replace(R.id.fragment_container, accountActivity).addToBackStack(null).commit();
+                transaction_ac.replace(R.id.fragment_container, accountActivity).commit();
                 check_ac = 0;
                 break;
 
             case 88:
                 DiaryActivity diaryActivity = new DiaryActivity();
                 FragmentTransaction transaction_di = getSupportFragmentManager().beginTransaction();
-                transaction_di.add(R.id.fragment_container, diaryActivity).addToBackStack(null).commit();
+                transaction_di.add(R.id.fragment_container, diaryActivity).commit();
                 check_ac = 0;
                 break;
 
             default:
                 ChecklistActivity checklistActivity = new ChecklistActivity();
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.fragment_container, checklistActivity).addToBackStack(null).commit();
+                transaction.add(R.id.fragment_container, checklistActivity).commit();
         }
     }
 
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick_home(View view){
-        Intent intent = new Intent(view.getContext(), HomeActivity.class);
+        Intent intent = new Intent(view.getContext(), HomeListActivity.class);
         startActivity(intent);
     }
 

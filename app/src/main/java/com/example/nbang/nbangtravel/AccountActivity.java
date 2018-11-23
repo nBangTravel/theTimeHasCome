@@ -40,6 +40,8 @@ public class AccountActivity extends Fragment{
                 AccountingContract.ConstantEntry.COLUMN_NAME_PRICE + ", " +
                 AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY +
                 " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + AccountingContract.ConstantEntry._ID + " DESC", null);
 
         final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_account, constantsCursor,
@@ -57,9 +59,12 @@ public class AccountActivity extends Fragment{
                 Intent intent = new Intent(getActivity(), AccountLookActivity.class);
                 constantsCursor = db.rawQuery("SELECT " + "*" +
                         " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
+                        " WHERE " + AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                        DataBaseHelper.now_travel + "\"" +
                         " WHERE " + AccountingContract.ConstantEntry._ID + " = " + id, null);
                 constantsCursor.moveToFirst();
                 intent.putExtra("this_ID", id);
+                AccountLookActivity.ID = (int)id;
                 intent.putExtra("this_date", constantsCursor.getString(1));
                 intent.putExtra("this_title", constantsCursor.getString(2));
                 intent.putExtra("this_participator", constantsCursor.getString(3));
@@ -135,19 +140,18 @@ public class AccountActivity extends Fragment{
                 AccountingContract.ConstantEntry.COLUMN_NAME_PRICE + ", " +
                 AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY +
                 " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
+                DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + AccountingContract.ConstantEntry._ID + " DESC", null);
 
         View view = getView();
-        ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_checklist, constantsCursor,
-                new String[] {CheckListContract.ConstantEntry.COLUMN_NAME_TITLE},
-                new int[] {R.id.item_list}, 0);
 
-        final ListAdapter adapter2 = new SimpleCursorAdapter(getContext(), R.layout.listview_account, constantsCursor,
+        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_account, constantsCursor,
                 new String[] {AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR,
                         AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY},
                 new int[] {R.id.account_title, R.id.account_participator, R.id.account_price, R.id.account_currency}, 0);
         final ListView listView = (ListView) view.findViewById(R.id.list_accountlist);
-        listView.setAdapter(adapter2);
+        listView.setAdapter(adapter);
     }
 
     @Override

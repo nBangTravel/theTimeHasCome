@@ -114,6 +114,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(R.id.diary_create_title)).getText().toString());
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, getBite(image_bitmap));
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(R.id.diary_create_content)).getText().toString());
+        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
 
         if(checks == 80) {
             db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ editId, null);
