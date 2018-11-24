@@ -41,13 +41,13 @@
                 android:onClick="ask_delete"/>
 
             <ImageButton
+                android:id="@+id/diary_look_edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/edit"
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:onClick="edit"/>
+                android:layout_marginRight="8dp" />
 
             <ImageButton
                 android:id="@+id/instagram"

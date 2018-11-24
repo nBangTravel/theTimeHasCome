@@ -4,12 +4,12 @@ import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -37,13 +37,17 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
     private SQLiteDatabase db = null;
     public static int checks = 0;
+    public static int getEditIntent = 0;
     public static int editDiary = 0;
-    static final int REQUEST_IMAGE_CAPTURE = 1;
+    //static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GET_GOOD_PIC = 1;
     private final int GALLERY_CODE=1112;
-    public static byte[] getByteArr = null;
+    //public static byte[] getByteArr = null;
     public static int editId;
     private String pictureImagePath = "";
+    public static int EDIT_ID;
+    private static Cursor constantsCursor = null;
+
 
     public void onComplete(String date) {
         TextView textView = (TextView) findViewById(R.id.diary_create_date);
@@ -57,10 +61,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         setContentView(R.layout.activity_diary_create);
 
         if(checks == 1){
-            /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-            }*/
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             String imageFileName = timeStamp + ".jpg";
             File storageDir = Environment.getExternalStoragePublicDirectory(
@@ -78,24 +78,31 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             checks = 0;
 
         }
-        if (editDiary == 1) {
-            Intent editInent = getIntent();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                editId=editInent.getExtras().getInt("this_ID");
-                TextView title = (TextView) findViewById(R.id.diary_create_title);
-                title.setText(editInent.getExtras().getString("this_title"));
-                TextView date = (TextView) findViewById(R.id.diary_create_date);
-                date.setText(editInent.getExtras().getString("this_date"));
-                TextView content = (TextView) findViewById(R.id.diary_create_content);
-                content.setText(editInent.getExtras().getString("this_content"));
-                ImageView picture = (ImageView) findViewById(R.id.diary_create_picture);
-                //byte[] src = intent.getExtras().getByteArray("this_picture");
-                Bitmap b = null;
-                if (getByteArr != null) {
-                    b = BitmapFactory.decodeByteArray(getByteArr, 0, getByteArr.length);
-                }
-                picture.setImageBitmap(b);
+
+        if(getEditIntent ==1){
+            Intent intent = getIntent();
+            EDIT_ID = intent.getExtras().getInt("edit_ID");
+
+            db = (new DataBaseHelper(this)).getWritableDatabase();
+            constantsCursor = db.rawQuery("SELECT " + "*" +
+                    " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
+                    " WHERE " + DiaryContract.ConstantEntry._ID + " = " + EDIT_ID, null);
+
+            TextView title = (TextView) findViewById(R.id.diary_look_title);
+            title.setText(constantsCursor.getString(2));
+            TextView date = (TextView) findViewById(R.id.diary_look_date);
+            date.setText(constantsCursor.getString(1));
+            TextView content = (TextView) findViewById(R.id.diary_look_content);
+            content.setText(constantsCursor.getString(4));
+            ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
+            byte[] src = constantsCursor.getBlob(3);
+            Bitmap b = null;
+            if (src != null) {
+                b = BitmapFactory.decodeByteArray(src, 0, src.length);
             }
+            picture.setImageBitmap(b);
+            editDiary = 1;
+            getEditIntent = 0;
         }
     }
 
@@ -135,7 +142,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             // Do the file write
             if (requestCode == 1) {
@@ -169,7 +175,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                 e.printStackTrace();
             }
         }
-
     }
 
     @Override
@@ -192,38 +197,20 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         }
     }
 
-/*    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //사진찍어서 가져오기
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-           Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            ((ImageView) findViewById(R.id.diary_create_picture)).setImageBitmap(imageBitmap);
-        }
-        //갤러리에서 가져오기
-        else if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
-            InputStream in = null;
-            try {
-                in = getContentResolver().openInputStream(data.getData());
-                Bitmap imageBitmap = BitmapFactory.decodeStream(in);
-                in.close();
-                ((ImageView)findViewById(R.id.diary_create_picture)).setImageBitmap(imageBitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
+    public void save(View view) throws IOException {
+        ImageView imageView = (ImageView)findViewById(R.id.diary_create_picture);
+        Bitmap resized = getResizedBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap(), imageView.getDrawable().getMinimumWidth());
 
-    public void save(View view){
-        ImageView image = (ImageView)findViewById(R.id.diary_create_picture);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        resized.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+        byte[] barray = stream.toByteArray();
+        resized.recycle();
+        stream.close();
 
-        Bitmap image_bitmap = ((BitmapDrawable)image.getDrawable()).getBitmap();
-        byte[] img_data = getBite(image_bitmap);
         ContentValues values = new ContentValues();
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.diary_create_date)).getText().toString());
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(R.id.diary_create_title)).getText().toString());
-        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, img_data);
+        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, barray);
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(R.id.diary_create_content)).getText().toString());
         values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
         if(editDiary == 1) {
@@ -241,9 +228,17 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         save.setEnabled(false);
     }
 
-    public byte[] getBite(Bitmap bitmap) {
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        return  out.toByteArray();
+    public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+        float bitmapRatio = (float) width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
     }
 }

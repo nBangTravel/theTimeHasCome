@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -42,24 +44,14 @@ public class DiaryActivity extends Fragment{
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                id = adapter.getItemId(position);
-
+                //id = Math.toIntExact(adapter.getItemId(position));
+                Log.i("------SELECTED ID",adapter.getItemId(position)+"" );
+                int selected = (int) adapter.getItemId(position);
                 Intent intent = new Intent(getActivity(), DiaryLookActivity.class);
-
-                constantsCursor = db.rawQuery("SELECT " + "*" +
-                        " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
-                        " WHERE " + DiaryContract.ConstantEntry._ID + " = " + id, null);
-
-                constantsCursor.moveToFirst();
-                intent.putExtra("this_ID", id);
-                DiaryLookActivity.ID = (int)id;
-                intent.putExtra("this_title", constantsCursor.getString(2));
-                intent.putExtra("this_date", constantsCursor.getString(1));
-                DiaryLookActivity.cc = constantsCursor.getBlob(3);
-                intent.putExtra("this_content", constantsCursor.getString(4));
-
+                intent.putExtra("this_ID", selected);
                 startActivity(intent);
             }
         });

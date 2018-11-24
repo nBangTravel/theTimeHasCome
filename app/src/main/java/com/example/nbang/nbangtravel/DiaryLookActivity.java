@@ -6,44 +6,68 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
-
 public class DiaryLookActivity extends AppCompatActivity {
     private SQLiteDatabase db;
     public static int ID;
-    public static byte[] cc = null;
+    private static Cursor constantsCursor = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_look);
-        db = (new DataBaseHelper(this)).getWritableDatabase();
+
         Intent intent = getIntent();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            TextView title = (TextView) findViewById(R.id.diary_look_title);
-            title.setText(intent.getExtras().getString("this_title"));
-            TextView date = (TextView) findViewById(R.id.diary_look_date);
-            date.setText(intent.getExtras().getString("this_date"));
-            TextView content = (TextView) findViewById(R.id.diary_look_content);
-            content.setText(intent.getExtras().getString("this_content"));
-            ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
-            //byte[] src = intent.getExtras().getByteArray("this_picture");
-            Bitmap b = null;
-            if (cc != null) {
-                b = BitmapFactory.decodeByteArray(cc, 0, cc.length);
+        ID = intent.getExtras().getInt("this_ID");
+        db = (new DataBaseHelper(this)).getWritableDatabase();
+        constantsCursor = db.rawQuery("SELECT " + "*" +
+                " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + DiaryContract.ConstantEntry._ID + " = " + ID, null);
+        Log.i("------I DID NOT GET ONE", constantsCursor.getCount()+"");
+        if(constantsCursor.getCount() == 1){
+            Log.i("---------I GOT ONE", constantsCursor.getCount()+"");
+            if(constantsCursor.moveToFirst()) {
+                /*String sTitle = constantsCursor.getString(2);
+                String sDate = constantsCursor.getString(1);
+                String sContent = constantsCursor.getString(4);
+                Log.i("-------TITLE", sTitle);
+                Log.i("-------DATE", sDate);
+                Log.i("-------CONTENT", sContent);*/
+                TextView title = (TextView) findViewById(R.id.diary_look_title);
+                title.setText(constantsCursor.getString(2));
+                TextView date = (TextView) findViewById(R.id.diary_look_date);
+                date.setText(constantsCursor.getString(1));
+                TextView content = (TextView) findViewById(R.id.diary_look_content);
+                content.setText(constantsCursor.getString(4));
+                ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
+                byte[] src = constantsCursor.getBlob(3);
+                Bitmap b = null;
+                if (src != null) {
+                    b = BitmapFactory.decodeByteArray(src, 0, src.length);
+                }
+                picture.setImageBitmap(b);
             }
-            picture.setImageBitmap(b);
         }
+        ImageButton edit = (ImageButton) findViewById(R.id.diary_look_edit);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent editIntent = new Intent(view.getContext(), DiaryCreateActivity.class);
+                DiaryCreateActivity.getEditIntent=1;
+                editIntent.putExtra("edit_ID", ID);
+                startActivity(editIntent);
+            }
+        });
+
     }
 
     public void ask_delete(View view) {
@@ -65,24 +89,5 @@ public class DiaryLookActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         MainActivity.check_ac=88;
         startActivity(intent);
-    }
-
-    public void edit(View view) {
-        //intent 로 화면을 create로 바꿔주고, 원래 내용 띄우기
-        Intent editIntent = new Intent(view.getContext(), DiaryCreateActivity.class);
-        DiaryCreateActivity.editDiary=1;
-        editIntent.putExtra("this_ID", DiaryLookActivity.ID);
-        TextView title = (TextView) findViewById(R.id.diary_look_title);
-        editIntent.putExtra("this_title", title.getText());
-        TextView date = (TextView) findViewById(R.id.diary_look_date);
-        editIntent.putExtra("this_date", date.getText());
-        ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
-        Bitmap bitmap = ((BitmapDrawable) picture.getDrawable()).getBitmap();
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-        DiaryCreateActivity.getByteArr = out.toByteArray();
-        TextView content = (TextView) findViewById(R.id.diary_look_content);
-        editIntent.putExtra("this_content", content.getText());
-        startActivity(editIntent);
     }
 }
