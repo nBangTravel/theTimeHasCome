@@ -70,7 +70,7 @@ public class DiaryLookActivity extends AppCompatActivity {
     public void edit(View view) {
         //intent 로 화면을 create로 바꿔주고, 원래 내용 띄우기
         Intent editIntent = new Intent(view.getContext(), DiaryCreateActivity.class);
-        DiaryCreateActivity.checks=80;
+        DiaryCreateActivity.editDiary=1;
         editIntent.putExtra("this_ID", DiaryLookActivity.ID);
         TextView title = (TextView) findViewById(R.id.diary_look_title);
         editIntent.putExtra("this_title", title.getText());

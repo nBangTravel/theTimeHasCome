@@ -59,6 +59,7 @@
                 android:onClick="onClickcamera"/>
 
             <ImageButton
+                android:id="@+id/diary_create_save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/add_circle"

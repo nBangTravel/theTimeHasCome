@@ -50,12 +50,24 @@
                 android:onClick="edit"/>
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/share_plane"
+                android:id="@+id/instagram"
+                android:layout_width="48px"
+                android:layout_height="48px"
+                android:src="@drawable/instagram"
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
-                android:layout_marginRight="8dp" />
+                android:layout_marginRight="8dp"
+                android:scaleType="centerInside"/>
+
+            <ImageButton
+                android:id="@+id/facebook"
+                android:layout_width="48px"
+                android:layout_height="48px"
+                android:src="@drawable/facebook"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp"
+                android:scaleType="centerInside"/>
 
         </LinearLayout>
 
