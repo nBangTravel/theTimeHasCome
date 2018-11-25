@@ -68,7 +68,8 @@
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
                 android:layout_marginRight="8dp"
-                android:scaleType="centerInside"/>
+                android:scaleType="centerInside"
+                android:onClick="shareKakaoTalk"/>
 
         </LinearLayout>
 

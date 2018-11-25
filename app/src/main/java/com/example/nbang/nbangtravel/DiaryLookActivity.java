@@ -156,6 +156,29 @@ public class DiaryLookActivity extends AppCompatActivity {
         }
     }
 
+    public void shareKakaoTalk(View view){
+        onRequestPermission();
+        if (permessionCheck) {
+            Intent kakao = new Intent(Intent.ACTION_SEND);
+            Log.i("------KAKAOTALK","intent created-----------");
+            String message = (String) ((TextView)findViewById(R.id.diary_look_content)).getText();
+            kakao.setType("text/plain");
+
+
+            try {
+                kakao.putExtra(Intent.EXTRA_TEXT, message);
+                kakao.setPackage("com.kakao.talk");
+                startActivity(kakao);
+                Log.i("------KAKAOTALK","intent started-----------");
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(this, "카카오톡이 설치되지 않았습니다.", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
     private void onRequestPermission() {
         Toast.makeText(this, "권한을 확인하는 중..", Toast.LENGTH_SHORT).show();
         int permissionReadStorage = ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -191,6 +214,8 @@ public class DiaryLookActivity extends AppCompatActivity {
                 break;
         }
     }
+
+
 
     public void shareFacebook (View view) {
 
