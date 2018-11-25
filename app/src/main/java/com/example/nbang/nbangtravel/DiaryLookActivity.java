@@ -115,7 +115,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         if (permessionCheck) {
             long now = System.currentTimeMillis();
             Date date = new Date(now);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             String getTime = simpleDateFormat.format(date);
             ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
             Bitmap bitmap = ((BitmapDrawable)picture.getDrawable()).getBitmap();
