@@ -1,5 +1,6 @@
 package com.example.nbang.nbangtravel;
 
+import android.app.ActionBar.LayoutParams;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -7,12 +8,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.app.ActionBar.LayoutParams;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class AccountCreateActivity extends AppCompatActivity implements DatePickerFragment.OnCompleteListener{
@@ -21,6 +24,22 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
     private Cursor constantsCursor = null;
     EditText ed[] = new EditText[AccountActivity.listItemsac.size()];
     int check_boxcheck[] = new int[AccountActivity.listItemsac.size()];
+    private Spinner spinner;
+    String[] currency = {"AED","AFN","ALL", "AMD", "ANG", "AOA", "ARS", "AUD", "AWG", "AZN", "BAM",
+            "BBD", "BDT", "BGN", "BHD", "BIF", "BMD", "BND", "BOB", "BRL", "BSD", "BTC", "BTN", "BWP",
+            "BYN", "BZD", "CAD", "CDF", "CHF", "CLF", "CLP", "CNH", "CNY", "COP", "CRC", "CUC", "CUP",
+            "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP",
+            "GEL", "GGP", "GHS", "GIP", "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF",
+            "IDR", "ILS", "IMP", "INR", "IQD", "IRR", "ISK", "JEP", "JMD", "JOD", "JPY", "KES", "KGS",
+            "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR", "LRD", "LSL", "LYD", "MAD",
+            "MDL", "MGA", "MKD", "MMK", "MNT", "MOP", "MRO", "MRU", "MUR", "MVR", "MWK", "MXN", "MYR",
+            "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK", "PHP", "PKR",
+            "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SBD", "SCR", "SDG", "SEK", "SGD",
+            "SHP", "SLL", "SOS", "SRD", "SSP", "STD", "STN", "SVC", "SYP", "SZL", "THB", "TJS", "TMT",
+            "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "USD", "UYU", "UZS", "VEF", "VES",
+            "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XCD", "XDR", "XOF", "XPD", "XPF", "XPT", "YER",
+            "ZAR", "ZMW", "ZWL"};
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -48,6 +67,11 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
             ll.addView(ed[j]);
             listC.addView(ll);
         }
+
+        spinner = (Spinner)findViewById(R.id.spinner);
+        ArrayAdapter spinnerAdapter;
+        spinnerAdapter = new ArrayAdapter(this, R.layout.support_simple_spinner_dropdown_item, currency);
+        spinner.setAdapter(spinnerAdapter);
     }
 
     public void showDatePickerDialog(View v) {
@@ -67,11 +91,12 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
                 continue;
             }
             ContentValues values = new ContentValues();
+            Log.i("df", String.valueOf(ed[j].getText()));
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.account_create_date)).getText().toString());
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, String.valueOf(title.getText()));
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, AccountActivity.listItemsac.get(j));
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, Integer.parseInt(String.valueOf(ed[j].getText())));
-            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, "WON");
+            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, spinner.getSelectedItem().toString());
             values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
             db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, values);
         }

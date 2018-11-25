@@ -1,32 +1,21 @@
 package com.example.nbang.nbangtravel;
 
-import android.app.ActionBar;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class HomeListActivity extends AppCompatActivity {
 
@@ -112,6 +101,11 @@ public class HomeListActivity extends AppCompatActivity {
                 }
             }).show();
         }
+    }
+
+    public void onClick(View view){
+        Intent intent = new Intent(view.getContext(), ShowCurrency.class);
+        startActivity(intent);
     }
 
     private void processDelete(long rowId) {
