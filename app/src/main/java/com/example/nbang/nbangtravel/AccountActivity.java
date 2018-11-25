@@ -1,13 +1,19 @@
 package com.example.nbang.nbangtravel;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -20,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +42,9 @@ public class AccountActivity extends Fragment{
     private static Cursor constantsCursor = null;
     private static final int DELETE_ID = Menu.FIRST+1;
     public static String s;
+    boolean permessionCheck = false;
+    private static final int REQUEST_EXTERNAL_STORAGE_CODE = 1;
+    private String shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -81,11 +91,12 @@ public class AccountActivity extends Fragment{
                 startActivity(intent);
             }
         });
-        FloatingActionButton plus = (FloatingActionButton) view.findViewById(R.id.kakaoShare);
+        final FloatingActionButton plus = (FloatingActionButton) view.findViewById(R.id.kakaoShare);
         plus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
                     inserttoMap(view);
+                    plus.setEnabled(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -175,9 +186,13 @@ public class AccountActivity extends Fragment{
     }
 
     public void inserttoMap(View view) throws JSONException, InterruptedException {
-
+        Toast.makeText(getContext(), "잠시만 기다려주세요. 계산중입니다.", Toast.LENGTH_LONG);
         new ShowCurrency.ExchangeRateTask().execute();
         new putmap().execute();
+        Thread.sleep(3000);
+        shareKakaoTalk();
+        Log.d("result", shout);
+        shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
     }
 
     private class putmap extends AsyncTask<Void, Void, Void> {
@@ -204,7 +219,7 @@ public class AccountActivity extends Fragment{
             constantsCursor.moveToFirst();
 
             try{
-                Thread.sleep(3000);
+                Thread.sleep(2000);
                 JSONObject object = new JSONObject(s);
                 object = object.getJSONObject("rates");
                 for(int i = 0; i < count; i++){
@@ -264,46 +279,106 @@ public class AccountActivity extends Fragment{
                             }
                         }
                     }
-                    for(String key : topay.keySet()){
-                        double value = topay.get(key);
-                        Log.d("map: ", key+" : "+value);
-                    }
-                    Log.d("check: ", "***********************");
                     constantsCursor.moveToNext();
                 }
             }catch(Exception e){
 
             }
             double[] divide = new double[listItemsac.size()];
+            int chc = 0;
             for(String key : topay.keySet()){
-                int j = 0;
                 double value1 = topay.get(key);
-                double value2 = topay.get(key);
-                divide[j] = value1 - value2;
-                j++;
+                double value2 = paid.get(key);
+                divide[chc] = value1 - value2;
+                chc += 1;
             }
+
             int[][] service = new int[listItemsac.size()][listItemsac.size()];
             for(int i = 0; i<divide.length; i++){
-                for(int j = 0; j<divide.length; j++){
-                    if(divide[i]<=0){
-                        break;
-                    }
-                    if(divide[j]<0){
-
+                if(divide[i]<=0){
+                    continue;
+                }else{
+                    for(int j = 0; j<divide.length; j++){
+                        if(divide[j]>=0){
+                            continue;
+                        }else{
+                            if(divide[i]+divide[j]>0){
+                                service[i][j] += (-divide[j]);
+                                divide[i] += divide[j];
+                                divide[j] = 0;
+                            }else{
+                                service[i][j] += (divide[i]);
+                                divide[j] += divide[i];
+                                divide[i] = 0;
+                            }
+                        }
                     }
                 }
             }
 
-            for(String key : paid.keySet()){
-                double value = paid.get(key);
-                Log.d("map: ", key+" : "+value);
+            for(int i = 0; i<listItemsac.size(); i++){
+                for(int j = 0; j<listItemsac.size();j++){
+                    if(service[i][j] != 0){
+                        shout += paid.keySet().toArray()[i] + "님이 ";
+                        shout += paid.keySet().toArray()[j] + "님에게 " + service[i][j] + "원을, ";
+                    }
+                }
             }
-            for(String key : topay.keySet()){
-                double value = topay.get(key);
-                Log.d("map: ", key+" : "+value);
-            }
-
+            shout += "주시면 됩니다.";
             return null;
+        }
+    }
+
+    public void shareKakaoTalk(){
+        onRequestPermission();
+        if (permessionCheck) {
+            Intent kakao = new Intent(Intent.ACTION_SEND);
+            kakao.setType("text/plain");
+            try {
+                kakao.putExtra(Intent.EXTRA_TEXT, shout);
+                kakao.setPackage("com.kakao.talk");
+                startActivity(kakao);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getContext(), "카카오톡이 설치되지 않았습니다.", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void onRequestPermission() {
+        Toast.makeText(getContext(), "권한을 확인하는 중..", Toast.LENGTH_SHORT).show();
+        int permissionReadStorage = ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.READ_EXTERNAL_STORAGE);
+        int permissionWriteStorage = ContextCompat.checkSelfPermission(getContext(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (permissionReadStorage == PackageManager.PERMISSION_DENIED || permissionWriteStorage == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                            Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_EXTERNAL_STORAGE_CODE);
+        } else {
+            permessionCheck = true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_EXTERNAL_STORAGE_CODE:
+                for (int i = 0; i<permissions.length; i++) {
+                    String permission = permissions[i];
+                    int grantResult = grantResults[i];
+                    if(permission.equals(Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        if (grantResult == PackageManager.PERMISSION_GRANTED){
+                            Toast.makeText(getContext(), "공유되었습니다.", Toast.LENGTH_SHORT).show();
+                            permessionCheck= true;
+                        } else {
+                            Toast.makeText(getContext(), "권한이 없습니다.", Toast.LENGTH_SHORT).show();
+                            permessionCheck= false;
+                        }
+                    }
+                }
+                break;
         }
     }
 
