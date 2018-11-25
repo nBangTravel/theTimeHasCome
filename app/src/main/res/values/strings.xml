@@ -10,4 +10,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="facebook_app_id">271734733529700</string>
+    <string name="title_activity_facebook">FacebookActivity</string>
 </resources>

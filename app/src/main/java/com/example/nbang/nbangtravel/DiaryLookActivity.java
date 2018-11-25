@@ -16,6 +16,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.Sharer;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.model.SharePhoto;
+import com.facebook.share.model.SharePhotoContent;
+import com.facebook.share.widget.ShareDialog;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -45,6 +58,8 @@ public class DiaryLookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_look);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
         Intent intent = getIntent();
         ID = intent.getExtras().getInt("this_ID");
         db = (new DataBaseHelper(this)).getWritableDatabase();
@@ -158,7 +173,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         }
     }
 
-    public void shareKakaoTalk(View view){
+    /*public void shareKakaoTalk(View view){
         onRequestPermission();
         if (permessionCheck) {
             Intent kakao = new Intent(Intent.ACTION_SEND);
@@ -179,7 +194,7 @@ public class DiaryLookActivity extends AppCompatActivity {
             }
         }
 
-    }
+    }*/
 
     private void onRequestPermission() {
         Toast.makeText(this, "권한을 확인하는 중..", Toast.LENGTH_SHORT).show();
@@ -217,9 +232,43 @@ public class DiaryLookActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void shareFacebook (View view) {
+        Log.i("------FACEBOOK", "WILL BE EXECUTED------");
+        ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
+        Bitmap bitmap = ((BitmapDrawable)picture.getDrawable()).getBitmap();
+        CallbackManager callbackManager;
+        ShareDialog shareDialog;
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
+        shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
+            @Override
+            public void onSuccess(Sharer.Result result) {
+
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        if (ShareDialog.canShow(SharePhotoContent.class)) {
+            SharePhoto photo = new SharePhoto.Builder()
+                    .setBitmap(bitmap)
+                    .build();
+
+            SharePhotoContent content = new SharePhotoContent.Builder()
+                    .addPhoto(photo)
+                    .build();
+            shareDialog.show(content);
+        }
+
+
 
     }
 }
