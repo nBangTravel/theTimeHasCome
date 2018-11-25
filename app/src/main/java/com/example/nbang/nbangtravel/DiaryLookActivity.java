@@ -17,6 +17,7 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -141,7 +142,8 @@ public class DiaryLookActivity extends AppCompatActivity {
             Intent share = new Intent(Intent.ACTION_SEND);
             Log.i("------INSTAGRAM","intent created-----------");
             share.setType("image/*");
-            Uri uri = Uri.fromFile(new File(fullPath, fileName));
+            //Uri uri = Uri.fromFile(new File(fullPath, fileName));
+            Uri uri = FileProvider.getUriForFile( this, "com.example.nbang.nbangtravel.fileprovider",new File(fullPath, fileName));
 
             try {
                 share.putExtra(Intent.EXTRA_STREAM, uri);
