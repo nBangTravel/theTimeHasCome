@@ -103,6 +103,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         startActivity(intent);
         MainActivity.check_ac = 1;
+        finish();
     }
 
     private CompoundButton.OnCheckedChangeListener handleCheck (final CheckBox chb) {

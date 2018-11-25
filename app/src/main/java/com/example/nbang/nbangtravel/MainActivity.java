@@ -40,24 +40,25 @@ public class MainActivity extends AppCompatActivity {
     public void onClick_account(View view){
         AccountActivity accountActivity = new AccountActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, accountActivity).addToBackStack(null).commit();
+        transaction.replace(R.id.fragment_container, accountActivity).commit();
     }
 
     public void onClick_check(View view){
         ChecklistActivity checklistActivity = new ChecklistActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, checklistActivity).addToBackStack(null).commit();
+        transaction.replace(R.id.fragment_container, checklistActivity).commit();
     }
 
     public void onClick_diary(View view){
         DiaryActivity diaryActivity = new DiaryActivity();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, diaryActivity).addToBackStack(null).commit();
+        transaction.replace(R.id.fragment_container, diaryActivity).commit();
     }
 
     public void onClick_home(View view){
         Intent intent = new Intent(view.getContext(), HomeListActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void onClick_camera(View view){

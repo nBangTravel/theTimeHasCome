@@ -23,8 +23,7 @@ public class ShowCurrency extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_showcurrency); }
+        super.onCreate(savedInstanceState);}
 
     public void OnClick(View view) {
         new ExchangeRateTask().execute();

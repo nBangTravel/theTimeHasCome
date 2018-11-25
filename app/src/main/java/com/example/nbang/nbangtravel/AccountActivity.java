@@ -81,7 +81,7 @@ public class AccountActivity extends Fragment{
                 startActivity(intent);
             }
         });
-        FloatingActionButton plus = (FloatingActionButton) view.findViewById(R.id.add3);
+        FloatingActionButton plus = (FloatingActionButton) view.findViewById(R.id.kakaoShare);
         plus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
