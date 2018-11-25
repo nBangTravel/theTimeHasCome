@@ -76,10 +76,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:textSize="20sp"
-            android:hint="제목을 입력해주세요"/>
+            android:hint="제목을 입력해주세요"
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
 
         <TextView
-            android:id="@id/diary_create_date"
+            android:id="@+id/diary_create_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -106,7 +108,9 @@
             android:id="@+id/diary_create_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="내용을 입력해주세요."/>
+            android:hint="내용을 입력해주세요."
+            android:imeOptions="actionDone"
+            />
         </LinearLayout>
 
 

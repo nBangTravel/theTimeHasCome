@@ -43,9 +43,6 @@
             android:name="com.facebook.FacebookContentProvider"
             android:exported="true"/>
 
-        <activity
-            android:name=".FacebookActivity"
-            android:label="@string/title_activity_facebook"></activity>
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
     </application>

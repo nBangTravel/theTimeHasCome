@@ -44,6 +44,8 @@ public class HomeActivity extends AppCompatActivity {
         registerForContextMenu(listView);
     }
 
+
+
     private void init_tables(){
         dbHelper = new DataBaseHelper(this);
     }
@@ -116,5 +118,12 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }).show();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        constantsCursor.close();
+        db.close();
     }
 }

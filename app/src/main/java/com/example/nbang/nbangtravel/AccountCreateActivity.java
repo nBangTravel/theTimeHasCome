@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -64,7 +66,10 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
             participation.setOnCheckedChangeListener(handleCheck(participation));
             ed[j] = new EditText(this);
             ed[j].setId(j);
+            ed[j].setInputType(InputType.TYPE_CLASS_NUMBER|InputType.TYPE_NUMBER_FLAG_DECIMAL);
             ed[j].setHint("가격을 입력해주세요");
+            ed[j].setSingleLine();
+            ed[j].setImeOptions(EditorInfo.IME_ACTION_NEXT);
             ll.addView(ed[j]);
             listC.addView(ll);
         }
@@ -108,6 +113,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         Intent intent = new Intent(view.getContext(), MainActivity.class);
         startActivity(intent);
         MainActivity.check_ac = 1;
+        db.close();
         finish();
     }
 

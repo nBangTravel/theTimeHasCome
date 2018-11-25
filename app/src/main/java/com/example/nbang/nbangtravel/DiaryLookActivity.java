@@ -13,10 +13,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -27,14 +25,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.share.Sharer;
-import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.model.SharePhoto;
 import com.facebook.share.model.SharePhotoContent;
 import com.facebook.share.widget.ShareDialog;
@@ -57,7 +53,6 @@ public class DiaryLookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diary_look);
-
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         Intent intent = getIntent();
@@ -101,7 +96,6 @@ public class DiaryLookActivity extends AppCompatActivity {
                 startActivity(editIntent);
             }
         });
-
     }
 
     public void ask_delete(View view) {
@@ -173,29 +167,6 @@ public class DiaryLookActivity extends AppCompatActivity {
         }
     }
 
-    /*public void shareKakaoTalk(View view){
-        onRequestPermission();
-        if (permessionCheck) {
-            Intent kakao = new Intent(Intent.ACTION_SEND);
-            Log.i("------KAKAOTALK","intent created-----------");
-            String message = (String) ((TextView)findViewById(R.id.diary_look_content)).getText();
-            kakao.setType("text/plain");
-
-
-            try {
-                kakao.putExtra(Intent.EXTRA_TEXT, message);
-                kakao.setPackage("com.kakao.talk");
-                startActivity(kakao);
-                Log.i("------KAKAOTALK","intent started-----------");
-            } catch (ActivityNotFoundException e) {
-                Toast.makeText(this, "카카오톡이 설치되지 않았습니다.", Toast.LENGTH_SHORT).show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }*/
-
     private void onRequestPermission() {
         Toast.makeText(this, "권한을 확인하는 중..", Toast.LENGTH_SHORT).show();
         int permissionReadStorage = ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -243,17 +214,12 @@ public class DiaryLookActivity extends AppCompatActivity {
         shareDialog.registerCallback(callbackManager, new FacebookCallback<Sharer.Result>() {
             @Override
             public void onSuccess(Sharer.Result result) {
-
             }
-
             @Override
             public void onCancel() {
-
             }
-
             @Override
             public void onError(FacebookException error) {
-
             }
         });
 
@@ -267,8 +233,12 @@ public class DiaryLookActivity extends AppCompatActivity {
                     .build();
             shareDialog.show(content);
         }
+    }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        constantsCursor.close();
+        db.close();
     }
 }

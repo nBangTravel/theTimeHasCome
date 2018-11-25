@@ -16,12 +16,15 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class HomeListActivity extends AppCompatActivity {
 
     private SQLiteDatabase db = null;
     private static Cursor constantsCursor = null;
     private static final int DELETE_ID = Menu.FIRST+1;
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,19 @@ public class HomeListActivity extends AppCompatActivity {
                 Intent intent = new Intent(v.getContext(), HomeActivity.class);
                 startActivity(intent); }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+            Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -135,5 +151,10 @@ public class HomeListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        constantsCursor.close();
+        db.close();
+    }
 }

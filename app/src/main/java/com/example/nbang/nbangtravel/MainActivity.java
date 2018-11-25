@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     static int check_ac = 0;
+    private final long FINISH_INTERVAL_TIME = 2000;
+    private long backPressedTime = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,5 +68,18 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
         startActivity(intent);
         DiaryCreateActivity.checks = 1;
+    }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+            Toast.makeText(this, "한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
     }
 }

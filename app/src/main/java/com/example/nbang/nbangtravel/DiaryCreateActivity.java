@@ -41,10 +41,8 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     public static int checks = 0;
     public static int getEditIntent = 0;
     public static int editDiary = 0;
-    //static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int GET_GOOD_PIC = 1;
     private final int GALLERY_CODE=1112;
-    //public static byte[] getByteArr = null;
     public static int editId;
     private String pictureImagePath = "";
     public static int EDIT_ID;
@@ -154,7 +152,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                     Log.i("HERE----------------", "IMAGE FILE EXISTS");
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                     ((ImageView) findViewById(R.id.diary_create_picture)).setImageBitmap(myBitmap);
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -163,7 +160,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             // Request permission from the user
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-
         }
         //갤러리에서 가져오기
         if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
@@ -243,5 +239,12 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             width = (int) (height * bitmapRatio);
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        constantsCursor.close();
+        db.close();
     }
 }

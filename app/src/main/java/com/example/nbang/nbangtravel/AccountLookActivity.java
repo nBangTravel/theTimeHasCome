@@ -42,6 +42,7 @@ public class AccountLookActivity extends AppCompatActivity {
             TextView currency = (TextView) findViewById(R.id.currency);
             currency.setText("통화: " + intent.getExtras().getString("this_currency"));
         }
+        db.close();
     }
 
     public void ask_delete(View view) {
@@ -57,11 +58,13 @@ public class AccountLookActivity extends AppCompatActivity {
     }
 
     public void delete() {
+        db = (new DataBaseHelper(this)).getWritableDatabase();
         db.delete(AccountingContract.ConstantEntry.TABLE_NAME, "_ID = " + ID, null );
         Toast.makeText(this, "삭제되었습니다.",Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, MainActivity.class);
         MainActivity.check_ac=1;
+        db.close();
         startActivity(intent);
     }
 
