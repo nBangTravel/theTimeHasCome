@@ -192,18 +192,26 @@ public class AccountActivity extends Fragment{
     }
 
     public void inserttoMap(View view) throws JSONException, InterruptedException {
-        Toast.makeText(getContext(), "잠시만 기다려주세요. 계산중입니다.", Toast.LENGTH_LONG);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+//        builder.setTitle("부탁창");
+//        builder.setMessage("가계부를 계산중입니다. 잠시만 기다려주세요.");
+//        builder.setPositiveButton("예",
+//                new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int which) {
+//                    }
+//                });
         new ShowCurrency.ExchangeRateTask().execute();
         new putmap().execute();
         while(true){
             if(checkResult==0){
                 Thread.sleep(100);
-            }else{
+            }else if(checkResult==1){
                 checkResult=0;
                 break;
             }
         }
         shareKakaoTalk();
+        Thread.sleep(1000);
         shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
     }
 

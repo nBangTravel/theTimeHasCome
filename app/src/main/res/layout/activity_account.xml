@@ -14,7 +14,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="41dp"
             android:orientation="horizontal">
 
             <!--<TextView
@@ -30,22 +30,29 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="0" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:text="가계부, 친구들과 공유하기: "
+                android:textSize="18sp" />
 
             <ImageButton
                 android:id="@+id/kakaoShare"
-                android:layout_width="65px"
-                android:layout_height="65px"
-                android:background="@android:color/transparent"
-                android:scaleType="centerInside"
-                android:src="@drawable/kakaotalk"
+                android:layout_width="44dp"
+                android:layout_height="37dp"
                 android:layout_gravity="bottom"
                 android:layout_marginRight="8dp"
-                />
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:src="@drawable/kakaotalk" />
 
 
         </LinearLayout>
-
 
 
         <ListView
@@ -53,7 +60,6 @@
             android:layout_width="match_parent"
             android:layout_height="508dp"
             android:layout_marginTop="8sp" />
-
 
 
     </LinearLayout>

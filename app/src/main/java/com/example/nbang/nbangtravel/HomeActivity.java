@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,8 +66,11 @@ public class HomeActivity extends AppCompatActivity {
                 " FROM " + HomeContract.ConstantEntry.TABLE_NAME +
                 " WHERE " + HomeContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" + travel.getText() + "\"", null);
         constantsCursor.moveToFirst();
-
-        if(constantsCursor.getCount() > 0){
+        if(TextUtils.isEmpty(travel.getText())){
+            Toast.makeText(this, "여행 가신다매요. 여행명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(listItems.size() == 0){
+            Toast.makeText(this, "여행 참여자가 아무도 없나요?", Toast.LENGTH_SHORT).show();
+        }else if(constantsCursor.getCount() > 0){
             Toast.makeText(this, "이미 존재하는 여행명입니다.", Toast.LENGTH_SHORT).show();
         }else{
             for(int i = 0; i < listItems.size(); i++){
