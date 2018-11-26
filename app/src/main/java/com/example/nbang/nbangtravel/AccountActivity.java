@@ -43,10 +43,12 @@ public class AccountActivity extends Fragment{
     private static SQLiteDatabase db = null;
     private static Cursor constantsCursor = null;
     private static final int DELETE_ID = Menu.FIRST+1;
-    public static String s;
+    public static String s = null;
     boolean permessionCheck = false;
     private static final int REQUEST_EXTERNAL_STORAGE_CODE = 1;
     private String shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
+    private int checkResult = 0;
+    JSONObject object;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -194,9 +196,14 @@ public class AccountActivity extends Fragment{
         Toast.makeText(getContext(), "잠시만 기다려주세요. 계산중입니다.", Toast.LENGTH_LONG);
         new ShowCurrency.ExchangeRateTask().execute();
         new putmap().execute();
-        Thread.sleep(3000);
+        while(true){
+            if(checkResult==0){
+                Thread.sleep(100);
+            }else{
+                break;
+            }
+        }
         shareKakaoTalk();
-        Log.d("result", shout);
         shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
     }
 
@@ -224,8 +231,14 @@ public class AccountActivity extends Fragment{
             constantsCursor.moveToFirst();
 
             try{
-                Thread.sleep(2000);
-                JSONObject object = new JSONObject(s);
+                while(true){
+                    if(s.equals(null)){
+                        Thread.sleep(100);
+                    }else{
+                        break;
+                    }
+                }
+                object = new JSONObject(s);
                 object = object.getJSONObject("rates");
                 for(int i = 0; i < count; i++){
 
@@ -330,6 +343,8 @@ public class AccountActivity extends Fragment{
                 }
             }
             shout += "주시면 됩니다.";
+            s = null;
+            checkResult = 1;
             return null;
         }
     }
