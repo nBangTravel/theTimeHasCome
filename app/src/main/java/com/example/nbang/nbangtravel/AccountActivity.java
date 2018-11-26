@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -200,6 +199,7 @@ public class AccountActivity extends Fragment{
             if(checkResult==0){
                 Thread.sleep(100);
             }else{
+                checkResult=0;
                 break;
             }
         }
