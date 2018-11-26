@@ -55,12 +55,10 @@ public class ShowCurrency extends Activity {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     AccountActivity.s = response.body().string();
-//                    Log.d("mytag", "s:" + AccountActivity.s);
 
                     try{
                         object = new JSONObject(AccountActivity.s);
                         object = object.getJSONObject("rates");
-//                        Log.d("mytag", "KRW: "+object.getDouble("KRW"));
                     }catch(JSONException e){
                         e.printStackTrace();
 

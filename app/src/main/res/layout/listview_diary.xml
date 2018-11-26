@@ -10,10 +10,11 @@
         android:id="@+id/diary_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
         android:layout_alignParentLeft="true"
         android:layout_weight="1"
-        android:textSize="20sp" />
+        android:textSize="15sp"
+        android:singleLine="true"
+        android:fontFamily="@font/baemin"/>
 
     <TextView
         android:id="@+id/diary_title"
@@ -22,6 +23,8 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_weight="5"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:singleLine="true"
+        android:fontFamily="@font/baemin"/>
 
 </LinearLayout>

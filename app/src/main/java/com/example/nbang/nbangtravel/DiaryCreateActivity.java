@@ -2,6 +2,7 @@ package com.example.nbang.nbangtravel;
 
 import android.Manifest;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,7 +18,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -48,6 +51,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     private String pictureImagePath = "";
     public static int EDIT_ID;
     private static Cursor constantsCursor = null;
+    public static int goback = 0;
 
 
     public void onComplete(String date) {
@@ -62,8 +66,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
         getSupportActionBar().setTitle("다이어리");
         setContentView(R.layout.activity_diary_create);
-        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);*/
 
         if(checks == 1){
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -125,16 +127,11 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.diary_create_bar_album:
-                // User chose the "Settings" item, show the app settings UI...
                 selectGallery();
                 return true;
-
             case R.id.diary_create_bar_camera:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
                 onClickcamera();
                 return true;
-
             case R.id.diary_create_bar_save:
                 try {
                     save();
@@ -142,10 +139,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                     e.printStackTrace();
                 }
                 return true;
-
             default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
         }
@@ -165,10 +159,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     }
 
     public void onClickcamera(){
-        /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        }*/
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = timeStamp + ".jpg";
         File storageDir = Environment.getExternalStoragePublicDirectory(
@@ -242,32 +232,44 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
     public void save() throws IOException {
         ImageView imageView = (ImageView)findViewById(R.id.diary_create_picture);
-        Bitmap resized = getResizedBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap(), imageView.getDrawable().getMinimumWidth());
+        Bitmap resized;
+        byte[] barray = null;
+        if(TextUtils.isEmpty(((TextView)findViewById(R.id.diary_create_date)).getText())){
+            Toast.makeText(this, "날짜를 반드시 입력해주세요", Toast.LENGTH_SHORT).show();
+        }else if(TextUtils.isEmpty(((EditText)findViewById(R.id.diary_create_title)).getText())){
+            Toast.makeText(this, "다이어리의 제목을 반드시 입력해주세요", Toast.LENGTH_SHORT).show();
+        }else if((BitmapDrawable)imageView.getDrawable() == null) {
+            Toast.makeText(this, "다이어리엔 사진이 필수!", Toast.LENGTH_SHORT).show();
+        }else {
+            resized = getResizedBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap(), imageView.getDrawable().getMinimumWidth());
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            resized.compress(Bitmap.CompressFormat.JPEG, 50, stream);
+            barray = stream.toByteArray();
+            resized.recycle();
+            stream.close();
 
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        resized.compress(Bitmap.CompressFormat.JPEG, 50, stream);
-        byte[] barray = stream.toByteArray();
-        resized.recycle();
-        stream.close();
+            ContentValues values = new ContentValues();
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.diary_create_date)).getText().toString());
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(R.id.diary_create_title)).getText().toString());
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, barray);
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(R.id.diary_create_content)).getText().toString());
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
+            if(editDiary == 1) {
+                db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ editId, null);
+                Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show();
+                editDiary = 0;
+            } else {
+                db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, values);
+                Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
+            }
+            Intent intent = new Intent(this, MainActivity.class);
+            MainActivity.check_ac=88;
+            startActivity(intent);
+            finish();
 
-        ContentValues values = new ContentValues();
-        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.diary_create_date)).getText().toString());
-        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(R.id.diary_create_title)).getText().toString());
-        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, barray);
-        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(R.id.diary_create_content)).getText().toString());
-        values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
-        if(editDiary == 1) {
-            db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ editId, null);
-            Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show();
-            editDiary = 0;
-        } else {
-            db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, values);
-            Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
         }
-        Intent intent = new Intent(this, MainActivity.class);
-        MainActivity.check_ac=88;
-        startActivity(intent);
-        finish();
+
+
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
@@ -282,6 +284,24 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             width = (int) (height * bitmapRatio);
         }
         return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this).setTitle("다이어리 작성을 취소할까요?").setPositiveButton("네", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                goback =1;
+            }
+        }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                //ignore
+            }
+        }).show();
+
+        if (goback==1) {
+            super.onBackPressed();
+            goback = 0;
+        }
     }
 
     @Override

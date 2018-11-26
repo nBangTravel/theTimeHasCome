@@ -50,7 +50,6 @@ public class DiaryActivity extends Fragment{
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                //id = Math.toIntExact(adapter.getItemId(position));
                 Log.i("------SELECTED ID",adapter.getItemId(position)+"" );
                 int selected = (int) adapter.getItemId(position);
                 Intent intent = new Intent(getActivity(), DiaryLookActivity.class);

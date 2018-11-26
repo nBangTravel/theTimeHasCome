@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+
+    <item
+        android:id="@+id/diary_look_bar_delete"
+        android:icon="@drawable/delete"
+        app:showAsAction="ifRoom"
+        android:title="" />
+
+    <item android:id="@+id/diary_look_bar_edit"
+        android:icon="@drawable/edit"
+        app:showAsAction="ifRoom"
+        android:title="" />
+
+    <item
+        android:id="@+id/diary_look_bar_instagram"
+        app:showAsAction="never"
+        android:title="인스타그램 공유하기"/>
+
+    <item
+        android:id="@+id/diary_look_bar_facebook"
+        app:showAsAction="never"
+        android:title="페이스북에 공유하기"/>
+
+
+</menu>

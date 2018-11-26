@@ -4,14 +4,12 @@
     android:layout_height="match_parent"
     android:layout_width="wrap_content">
 
-    <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/diary_create_bar_album"
         android:icon="@drawable/album"
         app:showAsAction="ifRoom"
         android:title="" />
 
-    <!-- Settings, should always be in the overflow -->
     <item android:id="@+id/diary_create_bar_camera"
         android:icon="@drawable/camera"
         app:showAsAction="ifRoom"

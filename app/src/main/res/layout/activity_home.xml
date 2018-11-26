@@ -14,10 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:text="새로운 여행"
-        android:textSize="50sp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/baemin"/>
 
     <EditText
         android:id="@+id/editText"
@@ -29,11 +30,14 @@
         android:layout_marginEnd="30dp"
         android:layout_marginRight="30dp"
         android:hint="여행 제목을 입력해주세요"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         android:imeOptions="actionNext"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:fontFamily="@font/baemin"
+        />
 
     <ListView
         android:id="@+id/list"
@@ -47,7 +51,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText"
-        android:scrollbarAlwaysDrawVerticalTrack="true"/>
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fontFamily="@font/baemin"/>
 
     <EditText
         android:id="@+id/participator"
@@ -61,22 +66,24 @@
         android:hint="참여자 이름을 입력하세요"
         android:imeOptions="actionDone"
         android:singleLine="true"
-        android:textSize="12sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list" />
+        app:layout_constraintTop_toBottomOf="@+id/list"
+        android:fontFamily="@font/baemin"/>
 
-    <Button
-        android:id="@+id/button"
+    <ImageButton
+        android:id="@id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="31dp"
         android:layout_marginRight="31dp"
-        android:text="+"
+        android:src="@drawable/add_circle"
+        android:background="@android:color/transparent"
         android:onClick="addItems"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list" />
+        app:layout_constraintTop_toBottomOf="@+id/list"/>
 
     <Button
         android:id="@+id/button2"
@@ -93,6 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/participator" />
+        app:layout_constraintTop_toBottomOf="@+id/participator"
+        android:fontFamily="@font/baemin"/>
 
 </android.support.constraint.ConstraintLayout>

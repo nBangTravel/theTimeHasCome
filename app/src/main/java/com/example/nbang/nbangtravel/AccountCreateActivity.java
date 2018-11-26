@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
@@ -60,6 +63,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
             ll.setOrientation(LinearLayout.HORIZONTAL);
             TextView participator = new TextView(this);
             participator.setText(AccountActivity.listItemsac.get(j));
+            participator.setTextSize(20);
             ll.addView(participator);
             CheckBox participation = new CheckBox(this);
             participation.setId(j);
@@ -82,6 +86,24 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         spinner.setAdapter(spinnerAdapter);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.account_create_actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.account_create_bar_save:
+                onClickac();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
@@ -91,7 +113,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
         dbHelper = new DataBaseHelper(this);
     }
 
-    public void onClickac(View view){
+    public void onClickac(){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         EditText title = (EditText) findViewById(R.id.editText2);
         constantsCursor = db.rawQuery("SELECT " + "*" +
@@ -119,7 +141,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
                 db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, values);
             }
-            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             MainActivity.check_ac = 1;
             db.close();

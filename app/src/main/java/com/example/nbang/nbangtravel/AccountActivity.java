@@ -19,11 +19,11 @@ import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -98,24 +97,44 @@ public class AccountActivity extends Fragment{
                 startActivity(intent);
             }
         });
-        final ImageButton plus = (ImageButton) view.findViewById(R.id.kakaoShare);
-        plus.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                try {
-                    inserttoMap(view);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+
         FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add2);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addAccount(); }
         });
+        setHasOptionsMenu(true);
         return view;
+    }
+
+    @Override
+    public void setHasOptionsMenu(boolean hasMenu) {
+        super.setHasOptionsMenu(hasMenu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.account_actionbar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.account_share_kakao:
+                try {
+                    inserttoMap();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
     public void addAccount() {
@@ -191,7 +210,7 @@ public class AccountActivity extends Fragment{
         listView.setAdapter(adapter);
     }
 
-    public void inserttoMap(View view) throws JSONException, InterruptedException {
+    public void inserttoMap() throws JSONException, InterruptedException {
 
         new ShowCurrency.ExchangeRateTask().execute();
         new putmap().execute();

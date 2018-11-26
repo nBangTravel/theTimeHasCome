@@ -3,16 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
-
-
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <LinearLayout
             android:id="@+id/diary_create_header"
@@ -21,57 +18,16 @@
             android:orientation="horizontal"
             android:layout_above="@+id/diary_create_date">
 
-            <!--<TextView
-                android:id="@+id/title_diary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="다이어리"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"/>-->
-
             <EditText
                 android:id="@+id/diary_create_title"
                 android:layout_width="match_parent"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginLeft="8dp"
                 android:textSize="20sp"
                 android:hint="새로운 다이어리"
                 android:imeOptions="actionNext"
-                android:singleLine="true"/>
-
-
-
-            <!--<ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/album"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:onClick="selectGallery"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/camera"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:onClick="onClickcamera"/>
-
-            <ImageButton
-                android:id="@+id/diary_create_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/add_circle"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:onClick="save"/>-->
+                android:singleLine="true"
+                android:fontFamily="@font/baemin"/>
 
         </LinearLayout>
 
@@ -94,23 +50,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:hint="날짜를 선택해주세요"
-                android:focusable="false" />
+                android:focusable="false"
+                android:fontFamily="@font/baemin"/>
         </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="307dp">
-
             <ImageView
                 android:id="@+id/diary_create_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/diary_create_content"
-                android:src="@mipmap/image_load_plz" />
-
+                android:layout_above="@+id/diary_create_content"/>
         </LinearLayout>
 
         <EditText
@@ -119,6 +73,8 @@
             android:layout_height="wrap_content"
             android:hint="내용을 입력해주세요."
             android:imeOptions="actionDone"
+            android:fontFamily="@font/baemin"
+            android:textSize="18sp"
             />
         </LinearLayout>
 

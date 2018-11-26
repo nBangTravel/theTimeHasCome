@@ -20,6 +20,9 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,6 +57,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("다이어리");
         setContentView(R.layout.activity_diary_look);
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         Intent intent = getIntent();
@@ -62,16 +66,8 @@ public class DiaryLookActivity extends AppCompatActivity {
         constantsCursor = db.rawQuery("SELECT " + "*" +
                 " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
                 " WHERE " + DiaryContract.ConstantEntry._ID + " = " + ID, null);
-        Log.i("------I DID NOT GET ONE", constantsCursor.getCount()+"");
         if(constantsCursor.getCount() == 1){
-            Log.i("---------I GOT ONE", constantsCursor.getCount()+"");
             if(constantsCursor.moveToFirst()) {
-                /*String sTitle = constantsCursor.getString(2);
-                String sDate = constantsCursor.getString(1);
-                String sContent = constantsCursor.getString(4);
-                Log.i("-------TITLE", sTitle);
-                Log.i("-------DATE", sDate);
-                Log.i("-------CONTENT", sContent);*/
                 TextView title = (TextView) findViewById(R.id.diary_look_title);
                 title.setText(constantsCursor.getString(2));
                 TextView date = (TextView) findViewById(R.id.diary_look_date);
@@ -87,19 +83,41 @@ public class DiaryLookActivity extends AppCompatActivity {
                 picture.setImageBitmap(b);
             }
         }
-        ImageButton edit = (ImageButton) findViewById(R.id.diary_look_edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent editIntent = new Intent(view.getContext(), DiaryCreateActivity.class);
-                DiaryCreateActivity.getEditIntent=1;
-                editIntent.putExtra("edit_ID", ID);
-                startActivity(editIntent);
-            }
-        });
     }
 
-    public void ask_delete(View view) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.diary_look_actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.diary_look_bar_delete:
+                ask_delete();
+                return true;
+
+            case R.id.diary_look_bar_edit:
+                edit();
+                return true;
+
+            case R.id.diary_look_bar_instagram:
+                shareInstagram();
+                return true;
+
+            case R.id.diary_look_bar_facebook:
+                shareFacebook();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    public void ask_delete() {
         new AlertDialog.Builder(this).setTitle("삭제하시겠습니까?").setPositiveButton("삭제", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 delete();
@@ -120,7 +138,14 @@ public class DiaryLookActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void shareInstagram(View view) {
+    public void edit() {
+        Intent editIntent = new Intent(this, DiaryCreateActivity.class);
+        DiaryCreateActivity.getEditIntent=1;
+        editIntent.putExtra("edit_ID", ID);
+        startActivity(editIntent);
+    }
+
+    public void shareInstagram() {
         onRequestPermission();
         if (permessionCheck) {
             long now = System.currentTimeMillis();
@@ -150,7 +175,6 @@ public class DiaryLookActivity extends AppCompatActivity {
             }
 
             Intent share = new Intent(Intent.ACTION_SEND);
-            Log.i("------INSTAGRAM","intent created-----------");
             share.setType("image/*");
             //Uri uri = Uri.fromFile(new File(fullPath, fileName));
             Uri uri = FileProvider.getUriForFile( this, "com.example.nbang.nbangtravel.fileprovider",new File(fullPath, fileName));
@@ -159,7 +183,6 @@ public class DiaryLookActivity extends AppCompatActivity {
                 share.putExtra(Intent.EXTRA_STREAM, uri);
                 share.setPackage("com.instagram.android");
                 startActivity(share);
-                Log.i("------INSTAGRAM","intent started-----------");
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(this, "인스타그램이 설치되지 않았습니다.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -204,8 +227,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         }
     }
 
-    public void shareFacebook (View view) {
-        Log.i("------FACEBOOK", "WILL BE EXECUTED------");
+    public void shareFacebook () {
         ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
         Bitmap bitmap = ((BitmapDrawable)picture.getDrawable()).getBitmap();
         CallbackManager callbackManager;

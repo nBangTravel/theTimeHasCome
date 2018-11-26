@@ -2,87 +2,24 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="16dp"
-    android:layout_marginRight="16dp">
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-        <LinearLayout
-            android:id="@+id/diary_create_header"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/diary_look_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_above="@+id/diary_look_title">
-
-           <!-- <TextView
-                android:id="@+id/title_diary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="다이어리"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"/>-->
-            <TextView
-                android:id="@+id/diary_look_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_weight="2"
-                android:singleLine="true"
-                android:text="제목없음"
-                android:textSize="20sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/delete"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:onClick="ask_delete"/>
-
-            <ImageButton
-                android:id="@+id/diary_look_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/edit"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp" />
-
-            <ImageButton
-                android:id="@+id/instagram"
-                android:layout_width="65px"
-                android:layout_height="65px"
-                android:src="@drawable/instagram"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:scaleType="centerInside"
-                android:onClick="shareInstagram"/>
-
-            <ImageButton
-                android:id="@+id/facebook"
-                android:layout_width="65px"
-                android:layout_height="65px"
-                android:src="@drawable/facebook"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:scaleType="centerInside"
-                android:onClick="shareFacebook"/>
-
-        </LinearLayout>
+            android:layout_marginTop="8dp"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:text="제목없음"
+            android:textSize="20sp"
+            android:fontFamily="@font/baemin"/>
 
 
         <TextView
@@ -90,8 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:text="날짜없음"
-            android:textSize="15sp" />
+            android:text="날짜를 기록해 주세요"
+            android:textSize="20sp"
+            android:fontFamily="@font/baemin"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/diary_create_content"
-                android:src="@mipmap/diary_sample" />
+                />
 
         </LinearLayout>
 
@@ -110,7 +48,9 @@
             android:id="@+id/diary_look_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="내용없음" />
+            android:text="내용을 추가해주세요"
+            android:fontFamily="@font/baemin"
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
