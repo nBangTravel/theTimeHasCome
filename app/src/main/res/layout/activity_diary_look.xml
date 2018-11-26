@@ -16,10 +16,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_weight="2"
+            android:fontFamily="@font/baemin"
             android:singleLine="true"
             android:text="제목없음"
-            android:textSize="20sp"
-            android:fontFamily="@font/baemin"/>
+            android:textSize="28sp" />
 
 
         <TextView
@@ -27,9 +27,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
+            android:fontFamily="@font/baemin"
             android:text="날짜를 기록해 주세요"
-            android:textSize="20sp"
-            android:fontFamily="@font/baemin"/>
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
