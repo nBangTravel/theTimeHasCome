@@ -16,8 +16,9 @@
         android:label="n빵 여행"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+
         <activity android:name=".HomeListActivity"
             android:label="n빵 여행">
             <intent-filter>

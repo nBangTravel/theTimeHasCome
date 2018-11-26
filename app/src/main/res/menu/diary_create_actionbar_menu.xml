@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+
+    <!-- "Mark Favorite", should appear as action button if possible -->
+    <item
+        android:id="@+id/diary_create_bar_album"
+        android:icon="@drawable/album"
+        app:showAsAction="ifRoom"
+        android:title="" />
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/diary_create_bar_camera"
+        android:icon="@drawable/camera"
+        app:showAsAction="ifRoom"
+        android:title="" />
+
+    <item
+        android:id="@+id/diary_create_bar_save"
+        android:icon="@drawable/save"
+        app:showAsAction="ifRoom"
+        android:title=""/>
+
+</menu>

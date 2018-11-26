@@ -1,6 +1,5 @@
 package com.example.nbang.nbangtravel;
 
-
 import android.Manifest;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -20,6 +19,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -33,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 public class DiaryCreateActivity extends AppCompatActivity implements DatePickerFragment.OnCompleteListener {
 
@@ -50,7 +51,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
 
     public void onComplete(String date) {
-        getSupportActionBar().setTitle("다이어리");
         TextView textView = (TextView) findViewById(R.id.diary_create_date);
         textView.setText(date);
     }
@@ -59,7 +59,11 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     public void onCreate(Bundle savedInstanceState) {
         db = (new DataBaseHelper(this)).getWritableDatabase();
         super.onCreate(savedInstanceState);
+
+        getSupportActionBar().setTitle("다이어리");
         setContentView(R.layout.activity_diary_create);
+        /*Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);*/
 
         if(checks == 1){
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -110,20 +114,57 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.diary_create_actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.diary_create_bar_album:
+                // User chose the "Settings" item, show the app settings UI...
+                selectGallery();
+                return true;
+
+            case R.id.diary_create_bar_camera:
+                // User chose the "Favorite" action, mark the current item
+                // as a favorite...
+                onClickcamera();
+                return true;
+
+            case R.id.diary_create_bar_save:
+                try {
+                    save();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
 
     public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void selectGallery(View view) {
+    public void selectGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setData(android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent, GALLERY_CODE);
     }
 
-    public void onClickcamera(View view){
+    public void onClickcamera(){
         /*Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
@@ -199,7 +240,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         }
     }
 
-    public void save(View view) throws IOException {
+    public void save() throws IOException {
         ImageView imageView = (ImageView)findViewById(R.id.diary_create_picture);
         Bitmap resized = getResizedBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap(), imageView.getDrawable().getMinimumWidth());
 
@@ -226,8 +267,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         Intent intent = new Intent(this, MainActivity.class);
         MainActivity.check_ac=88;
         startActivity(intent);
-        ImageButton save = (ImageButton)findViewById(R.id.diary_create_save);
-        save.setEnabled(false);
         finish();
     }
 

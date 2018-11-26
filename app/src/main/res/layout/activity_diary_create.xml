@@ -2,8 +2,11 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp">
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,16 +43,9 @@
                 android:imeOptions="actionNext"
                 android:singleLine="true"/>
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/calendar"
-                android:background="@android:color/transparent"
-                android:layout_gravity="bottom"
-                android:layout_marginRight="8dp"
-                android:onClick="showDatePickerDialog" />
 
-            <ImageButton
+
+            <!--<ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/album"
@@ -75,20 +71,33 @@
                 android:background="@android:color/transparent"
                 android:layout_gravity="bottom"
                 android:layout_marginRight="8dp"
-                android:onClick="save"/>
+                android:onClick="save"/>-->
 
         </LinearLayout>
 
 
-
-        <TextView
-            android:id="@+id/diary_create_date"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="15sp"
-            android:hint="날짜를 선택해주세요"
-            android:focusable="false" />
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/calendar"
+                android:background="@android:color/transparent"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp"
+                android:onClick="showDatePickerDialog" />
+
+            <TextView
+                android:id="@+id/diary_create_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="15sp"
+                android:hint="날짜를 선택해주세요"
+                android:focusable="false" />
+        </LinearLayout>
 
 
         <LinearLayout
