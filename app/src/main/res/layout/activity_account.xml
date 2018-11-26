@@ -3,23 +3,62 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
 
-    <TextView
-        android:id="@+id/title_account"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/account"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginLeft="8dp"
-        android:layout_marginStart="8dp" />
+        android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/list_accountlist"
-        android:layout_width="match_parent"
-        android:layout_height="508dp"
-        android:layout_marginTop="48sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!--<TextView
+                android:id="@+id/title_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지출 일지"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp" />
+    -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:id="@+id/kakaoShare"
+                android:layout_width="65px"
+                android:layout_height="65px"
+                android:background="@android:color/transparent"
+                android:scaleType="centerInside"
+                android:src="@drawable/kakaotalk"
+                android:layout_gravity="bottom"
+                android:layout_marginRight="8dp"
+                />
+
+
+        </LinearLayout>
+
+
+
+        <ListView
+            android:id="@+id/list_accountlist"
+            android:layout_width="match_parent"
+            android:layout_height="508dp"
+            android:layout_marginTop="8sp" />
+
+
+
+    </LinearLayout>
+
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add2"
@@ -32,17 +71,5 @@
         app:backgroundTint="#ffffff"
         app:elevation="6dp"
         app:pressedTranslationZ="12dp" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/kakaoShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:src="@drawable/kakaotalk"
-        android:visibility="visible"
-        android:layout_margin="16dp"
-        app:backgroundTint="#ffffff"
-        app:elevation="6dp"
-        app:pressedTranslationZ="12dp"/>
 
 </FrameLayout>

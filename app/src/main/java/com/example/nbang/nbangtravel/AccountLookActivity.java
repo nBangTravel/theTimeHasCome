@@ -27,20 +27,21 @@ public class AccountLookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("지출 일지");
         setContentView(R.layout.activity_account_look);
         db = (new DataBaseHelper(this)).getWritableDatabase();
         Intent intent = getIntent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             TextView title = (TextView) findViewById(R.id.title);
-            title.setText("제목: " + intent.getExtras().getString("this_title"));
+            title.setText(intent.getExtras().getString("this_title"));
             TextView date = (TextView) findViewById(R.id.date);
-            date.setText("날짜: " + intent.getExtras().getString("this_date"));
+            date.setText(intent.getExtras().getString("this_date"));
             TextView participator = (TextView) findViewById(R.id.participator);
-            participator.setText("참여자: " + intent.getExtras().getString("this_participator"));
+            participator.setText(intent.getExtras().getString("this_participator"));
             TextView price = (TextView) findViewById(R.id.price);
-            price.setText("가격: " + intent.getExtras().getInt("this_price"));
+            price.setText(intent.getExtras().getInt("this_price"));
             TextView currency = (TextView) findViewById(R.id.currency);
-            currency.setText("통화: " + intent.getExtras().getString("this_currency"));
+            currency.setText(intent.getExtras().getString("this_currency"));
         }
         db.close();
     }
@@ -69,5 +70,16 @@ public class AccountLookActivity extends AppCompatActivity {
     }
 
     public void edit(View view) {
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (constantsCursor != null){
+            constantsCursor.close();
+        }
+        if (db != null){
+            db.close();
+        }
     }
 }

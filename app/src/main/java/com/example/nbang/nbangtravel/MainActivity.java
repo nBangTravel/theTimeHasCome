@@ -65,9 +65,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClick_camera(View view){
+        DiaryActivity diaryActivity = new DiaryActivity();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_container, diaryActivity).commit();
         Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
         startActivity(intent);
         DiaryCreateActivity.checks = 1;
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 
     @Override

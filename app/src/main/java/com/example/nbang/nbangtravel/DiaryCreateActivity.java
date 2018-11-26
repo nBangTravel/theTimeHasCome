@@ -50,6 +50,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
 
     public void onComplete(String date) {
+        getSupportActionBar().setTitle("다이어리");
         TextView textView = (TextView) findViewById(R.id.diary_create_date);
         textView.setText(date);
     }
@@ -82,25 +83,28 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         if(getEditIntent ==1){
             Intent intent = getIntent();
             EDIT_ID = intent.getExtras().getInt("edit_ID");
-
-            db = (new DataBaseHelper(this)).getWritableDatabase();
             constantsCursor = db.rawQuery("SELECT " + "*" +
                     " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
                     " WHERE " + DiaryContract.ConstantEntry._ID + " = " + EDIT_ID, null);
-
-            TextView title = (TextView) findViewById(R.id.diary_look_title);
-            title.setText(constantsCursor.getString(2));
-            TextView date = (TextView) findViewById(R.id.diary_look_date);
-            date.setText(constantsCursor.getString(1));
-            TextView content = (TextView) findViewById(R.id.diary_look_content);
-            content.setText(constantsCursor.getString(4));
-            ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
-            byte[] src = constantsCursor.getBlob(3);
-            Bitmap b = null;
-            if (src != null) {
-                b = BitmapFactory.decodeByteArray(src, 0, src.length);
+            Log.i("------I DID NOT GET ONE", constantsCursor.getCount()+"");
+            if(constantsCursor.getCount() == 1){
+                Log.i("---------I GOT ONE", constantsCursor.getCount()+"");
+                if(constantsCursor.moveToFirst()) {
+                    TextView title = (TextView) findViewById(R.id.diary_create_title);
+                    title.setText(constantsCursor.getString(2));
+                    TextView date = (TextView) findViewById(R.id.diary_create_date);
+                    date.setText(constantsCursor.getString(1));
+                    TextView content = (TextView) findViewById(R.id.diary_create_content);
+                    content.setText(constantsCursor.getString(4));
+                    ImageView picture = (ImageView) findViewById(R.id.diary_create_picture);
+                    byte[] src = constantsCursor.getBlob(3);
+                    Bitmap b = null;
+                    if (src != null) {
+                        b = BitmapFactory.decodeByteArray(src, 0, src.length);
+                    }
+                    picture.setImageBitmap(b);
+                }
             }
-            picture.setImageBitmap(b);
             editDiary = 1;
             getEditIntent = 0;
         }
@@ -244,7 +248,11 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        constantsCursor.close();
-        db.close();
+        if (constantsCursor !=null ){
+            constantsCursor.close();
+        }
+        if(db != null) {
+            db.close();
+        }
     }
 }

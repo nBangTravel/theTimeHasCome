@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <!--<TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -19,15 +19,23 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:text="Accounting Book"
-            android:textSize="30sp" />
+            android:textSize="30sp" />-->
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:hint="새로운 지출"
+            android:imeOptions="actionNext"
+            android:singleLine="true"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"
             android:onClick="showDatePickerDialog"
             android:src="@drawable/calendar" />
@@ -37,55 +45,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginStart="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginRight="8dp"
             android:background="@android:color/transparent"
             android:onClick="onClickac"
             android:src="@drawable/add_circle" />
 
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="100dp"
-        android:hint="가계부 제목을 입력하세요"
-        android:imeOptions="actionNext"
-        android:singleLine="true"/>
+
 
     <TextView
         android:id="@+id/account_create_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:focusable="false"
         android:hint="날짜를 선택해주세요"
-        android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+        android:textSize="15sp" />
 
 
-
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <LinearLayout
+        android:id="@+id/listcontainer"
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp">
-        <LinearLayout
-            android:id="@+id/listcontainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp">
+    </LinearLayout>
 
 
     <LinearLayout

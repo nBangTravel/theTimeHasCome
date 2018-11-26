@@ -34,6 +34,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("n빵 여행");
         setContentView(R.layout.activity_home);
         init_tables();
 
@@ -123,7 +124,11 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        constantsCursor.close();
-        db.close();
+        if (constantsCursor != null){
+            constantsCursor.close();
+        }
+        if (db != null){
+            db.close();
+        }
     }
 }

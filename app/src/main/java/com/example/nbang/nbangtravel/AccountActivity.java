@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -48,6 +50,9 @@ public class AccountActivity extends Fragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((MainActivity) getActivity())
+                .setActionBarTitle("지출 일지");
+
         final View view = inflater.inflate(R.layout.activity_account, container, false);
         db = (new DataBaseHelper(getContext())).getWritableDatabase();
         constantsCursor = db.rawQuery("SELECT " + AccountingContract.ConstantEntry._ID + ", " +
@@ -91,7 +96,7 @@ public class AccountActivity extends Fragment{
                 startActivity(intent);
             }
         });
-        final FloatingActionButton plus = (FloatingActionButton) view.findViewById(R.id.kakaoShare);
+        final ImageButton plus = (ImageButton) view.findViewById(R.id.kakaoShare);
         plus.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 try {
@@ -385,7 +390,11 @@ public class AccountActivity extends Fragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        constantsCursor.close();
-        db.close();
+        if (constantsCursor != null){
+            constantsCursor.close();
+        }
+        if (db != null){
+            db.close();
+        }
     }
 }

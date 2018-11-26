@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants">
 
-    <CheckBox
+    <!--<CheckBox
         android:id="@+id/item_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -14,17 +14,15 @@
         android:layout_alignParentTop="true"
         android:clickable="true"
         android:layout_alignParentLeft="true"
-        android:focusable="true" />
+        android:focusable="true" />-->
 
     <TextView
         android:id="@+id/item_list"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_toEndOf="@+id/item_checkbox"
         android:gravity="center"
-        android:textSize="20sp"
-        android:layout_toRightOf="@+id/item_checkbox" />
+        android:textSize="20sp" />
 
     <!--<ImageButton
         android:id="@+id/item_del"

@@ -3,24 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/title_diary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/diary"
-        android:textSize="30sp"
+        android:text="다이어리"
         android:textStyle="bold"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_above="@+id/list_diarylist"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="8dp" />-->
 
     <ListView
         android:id="@+id/list_diarylist"
         android:layout_width="match_parent"
         android:layout_height="541dp"
-        android:layout_marginTop="48sp" />
+        android:layout_marginTop="8dp"
+        />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add"

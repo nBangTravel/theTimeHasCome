@@ -42,4 +42,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         date = year + "-"+month + "-" +day;
         this.mListener.onComplete(date);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
 }

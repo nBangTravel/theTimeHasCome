@@ -26,6 +26,9 @@ public class DiaryActivity extends Fragment{
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
+
+        ((MainActivity) getActivity())
+                .setActionBarTitle("다이어리");
         db = (new DataBaseHelper(getContext())).getWritableDatabase();
         constantsCursor = db.rawQuery("SELECT " + DiaryContract.ConstantEntry._ID + ", " +
                 DiaryContract.ConstantEntry.COLUMN_NAME_DATE + ", " +
@@ -81,5 +84,16 @@ public class DiaryActivity extends Fragment{
     public void createDiary(View view) {
         Intent intent = new Intent(view.getContext(), DiaryCreateActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (constantsCursor != null){
+            constantsCursor.close();
+        }
+        if (db != null){
+            db.close();
+        }
     }
 }

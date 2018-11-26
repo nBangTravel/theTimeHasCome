@@ -27,6 +27,9 @@ public class ChecklistActivity extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        ((MainActivity) getActivity())
+                .setActionBarTitle("체크리스트");
+
         db = (new DataBaseHelper(getContext())).getWritableDatabase();
         constantsCursor = db.rawQuery("SELECT " + CheckListContract.ConstantEntry._ID + ", " + CheckListContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + CheckListContract.ConstantEntry.TABLE_NAME +
@@ -55,15 +58,19 @@ public class ChecklistActivity extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        constantsCursor.close();
-        db.close();
+        if (constantsCursor != null){
+            constantsCursor.close();
+        }
+        if (db != null){
+            db.close();
+        }
     }
 
     public void addList() {
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View addView = inflater.inflate(R.layout.checklist_add, null);
         final ChecklistAddActivity wrapper = new ChecklistAddActivity(addView);
-        new AlertDialog.Builder(getContext()).setTitle("할 일 추가하기").setView(addView).setPositiveButton("추가", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(getContext()).setTitle("새로운 할 일").setView(addView).setPositiveButton("추가", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 processAdd(wrapper);
             }

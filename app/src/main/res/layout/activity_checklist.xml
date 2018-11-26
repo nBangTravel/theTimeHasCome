@@ -4,22 +4,24 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:descendantFocusability="blocksDescendants">
+    android:descendantFocusability="blocksDescendants"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp">
 
-    <TextView
+    <!--<TextView
         android:id="@+id/title_checklist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/checklist"
-        android:textSize="30sp"
+        android:text="체크리스트"
         android:textStyle="bold"
-        android:layout_marginLeft="8dp" />
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp" />-->
 
     <ListView
         android:id="@+id/list_checklist"
         android:layout_width="match_parent"
-        android:layout_height="541dp"
-        android:layout_marginTop="48sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:choiceMode="multipleChoice" />
 
     <android.support.design.widget.FloatingActionButton

@@ -47,6 +47,7 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("지출 일지");
         setContentView(R.layout.activity_account_create);
         init_tables();
 

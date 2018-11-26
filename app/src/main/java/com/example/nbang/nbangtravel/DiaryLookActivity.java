@@ -52,6 +52,7 @@ public class DiaryLookActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().setTitle("다이어리");
         setContentView(R.layout.activity_diary_look);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
@@ -238,7 +239,11 @@ public class DiaryLookActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        constantsCursor.close();
-        db.close();
+        if (constantsCursor != null){
+            constantsCursor.close();
+        }
+        if (db != null){
+            db.close();
+        }
     }
 }
