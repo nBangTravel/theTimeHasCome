@@ -30,12 +30,12 @@
             <TextView
                 android:id="@+id/diary_look_title"
                 android:layout_width="wrap_content"
-                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:textSize="20sp"
-                android:text="이 다이어리의 제목은"
-                android:singleLine="true"/>
+                android:layout_weight="2"
+                android:singleLine="true"
+                android:text="제목없음"
+                android:textSize="20sp" />
 
             <View
                 android:layout_width="0dp"
@@ -85,18 +85,17 @@
         </LinearLayout>
 
 
-
         <TextView
             android:id="@+id/diary_look_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:textSize="15sp"
-            android:text="2018-03-23"/>
+            android:text="날짜없음"
+            android:textSize="15sp" />
 
         <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="500dp">
+            android:layout_width="match_parent"
+            android:layout_height="324dp">
 
             <ImageView
                 android:id="@+id/diary_look_picture"
@@ -111,7 +110,7 @@
             android:id="@+id/diary_look_content"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다. 여기에 내용이 보여야 합니다."/>
+            android:text="내용없음" />
 
     </LinearLayout>
 

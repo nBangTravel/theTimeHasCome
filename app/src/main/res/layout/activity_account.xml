@@ -58,7 +58,7 @@
         <ListView
             android:id="@+id/list_accountlist"
             android:layout_width="match_parent"
-            android:layout_height="508dp"
+            android:layout_height="401dp"
             android:layout_marginTop="8sp" />
 
 

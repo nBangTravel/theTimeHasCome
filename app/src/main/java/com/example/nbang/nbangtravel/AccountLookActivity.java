@@ -4,25 +4,20 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.ByteArrayOutputStream;
-import java.util.Objects;
 
 public class AccountLookActivity extends AppCompatActivity {
 
     private SQLiteDatabase db;
     private Cursor constantsCursor = null;
     public static int ID;
+    public static double prices = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -39,11 +34,12 @@ public class AccountLookActivity extends AppCompatActivity {
             TextView participator = (TextView) findViewById(R.id.participator);
             participator.setText(intent.getExtras().getString("this_participator"));
             TextView price = (TextView) findViewById(R.id.price);
-            price.setText(intent.getExtras().getInt("this_price"));
+            price.setText(String.valueOf(prices));
             TextView currency = (TextView) findViewById(R.id.currency);
             currency.setText(intent.getExtras().getString("this_currency"));
         }
         db.close();
+        prices = 0;
     }
 
     public void ask_delete(View view) {

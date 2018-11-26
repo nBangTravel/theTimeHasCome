@@ -38,6 +38,7 @@ import java.util.Map;
 
 public class AccountActivity extends Fragment{
 
+    int initial_exec = 0;
     static ArrayList<String> listItemsac=new ArrayList<String>();
     private static SQLiteDatabase db = null;
     private static Cursor constantsCursor = null;
@@ -46,7 +47,7 @@ public class AccountActivity extends Fragment{
     boolean permessionCheck = false;
     private static final int REQUEST_EXTERNAL_STORAGE_CODE = 1;
     private String shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
-    private int checkResult = 0;
+    static int checkResult = 0;
     JSONObject object;
 
     @Override
@@ -92,7 +93,7 @@ public class AccountActivity extends Fragment{
                 intent.putExtra("this_date", constantsCursor.getString(1));
                 intent.putExtra("this_title", constantsCursor.getString(2));
                 intent.putExtra("this_participator", constantsCursor.getString(3));
-                intent.putExtra("this_price", constantsCursor.getInt(4));
+                AccountLookActivity.prices = constantsCursor.getDouble(4);
                 intent.putExtra("this_currency", constantsCursor.getString(5));
                 startActivity(intent);
             }
@@ -102,7 +103,6 @@ public class AccountActivity extends Fragment{
             public void onClick(View v) {
                 try {
                     inserttoMap(view);
-                    plus.setEnabled(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 } catch (InterruptedException e) {
@@ -192,16 +192,10 @@ public class AccountActivity extends Fragment{
     }
 
     public void inserttoMap(View view) throws JSONException, InterruptedException {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-//        builder.setTitle("부탁창");
-//        builder.setMessage("가계부를 계산중입니다. 잠시만 기다려주세요.");
-//        builder.setPositiveButton("예",
-//                new DialogInterface.OnClickListener() {
-//                    public void onClick(DialogInterface dialog, int which) {
-//                    }
-//                });
+
         new ShowCurrency.ExchangeRateTask().execute();
         new putmap().execute();
+
         while(true){
             if(checkResult==0){
                 Thread.sleep(100);
@@ -211,7 +205,6 @@ public class AccountActivity extends Fragment{
             }
         }
         shareKakaoTalk();
-        Thread.sleep(1000);
         shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
     }
 
@@ -240,7 +233,7 @@ public class AccountActivity extends Fragment{
 
             try{
                 while(true){
-                    if(s.equals(null)){
+                    if(s == null){
                         Thread.sleep(100);
                     }else{
                         break;
@@ -252,7 +245,7 @@ public class AccountActivity extends Fragment{
 
                     String title = constantsCursor.getString(2);
                     String participator = constantsCursor.getString(3);
-                    int price = constantsCursor.getInt(4);
+                    double price = constantsCursor.getDouble(4);
                     String currency = constantsCursor.getString(5);
 
                     //Fist paid
@@ -352,7 +345,7 @@ public class AccountActivity extends Fragment{
             }
             shout += "주시면 됩니다.";
             s = null;
-            checkResult = 1;
+            AccountActivity.checkResult = 1;
             return null;
         }
     }

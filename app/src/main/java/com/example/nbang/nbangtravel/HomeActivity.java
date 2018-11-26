@@ -67,11 +67,11 @@ public class HomeActivity extends AppCompatActivity {
                 " WHERE " + HomeContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" + travel.getText() + "\"", null);
         constantsCursor.moveToFirst();
         if(TextUtils.isEmpty(travel.getText())){
-            Toast.makeText(this, "여행 가신다매요. 여행명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "여행명이 없다면, 여행지라도 입력해주세요.", Toast.LENGTH_SHORT).show();
         }else if(listItems.size() == 0){
-            Toast.makeText(this, "여행 참여자가 아무도 없나요?", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "참여자 이름은 꼭 필요해요!", Toast.LENGTH_SHORT).show();
         }else if(constantsCursor.getCount() > 0){
-            Toast.makeText(this, "이미 존재하는 여행명입니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "이미 존재하는 여행명입니다. 벌써 까먹으셨나요?", Toast.LENGTH_SHORT).show();
         }else{
             for(int i = 0; i < listItems.size(); i++){
                 if(i == listItems.size()-1){

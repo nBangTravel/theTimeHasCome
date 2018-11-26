@@ -49,7 +49,6 @@
             android:background="@android:color/transparent"
             android:onClick="onClickac"
             android:src="@drawable/add_circle" />
-
     </LinearLayout>
 
 
@@ -63,15 +62,17 @@
         android:hint="날짜를 선택해주세요"
         android:textSize="15sp" />
 
-
-    <LinearLayout
-        android:id="@+id/listcontainer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="16dp">
-    </LinearLayout>
+        android:layout_height="346dp">
 
+        <LinearLayout
+            android:id="@+id/listcontainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:orientation="vertical"></LinearLayout>
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

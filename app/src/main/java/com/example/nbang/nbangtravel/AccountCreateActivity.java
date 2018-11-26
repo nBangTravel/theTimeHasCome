@@ -111,9 +111,9 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, String.valueOf(title.getText()));
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, AccountActivity.listItemsac.get(j));
                 if(TextUtils.isEmpty(ed[j].getText())){
-                    values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, 0);
+                    values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, (double)0);
                 }else{
-                    values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, Integer.parseInt(String.valueOf(ed[j].getText())));
+                    values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, Double.parseDouble(String.valueOf(ed[j].getText())));
                 }
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, spinner.getSelectedItem().toString());
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);

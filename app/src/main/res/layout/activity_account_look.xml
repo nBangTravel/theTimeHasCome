@@ -17,30 +17,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textSize="20sp"
-            android:text="제목: " />
+            android:text="제목: "
+            android:textSize="36sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@android:color/transparent"
-            android:onClick="ask_delete"
-            android:src="@drawable/delete" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@android:color/transparent"
-            android:src="@drawable/edit"
-            android:onClick="edit" />
 
     </LinearLayout>
 
@@ -68,27 +51,28 @@
         android:id="@+id/participator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="참여자: " />
+        android:text="참여자: "
+        android:textSize="24sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
+
         <TextView
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="가격: " />
+            android:text="가격: "
+            android:textSize="24sp" />
 
         <TextView
-            android:layout_marginLeft="8dp"
             android:id="@+id/currency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="통화: " />
+            android:layout_marginLeft="8dp"
+            android:text="통화: "
+            android:textSize="24sp" />
 
     </LinearLayout>
 

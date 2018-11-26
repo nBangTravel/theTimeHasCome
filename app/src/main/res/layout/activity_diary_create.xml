@@ -91,17 +91,16 @@
             android:focusable="false" />
 
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="400dp">
+            android:layout_height="307dp">
 
             <ImageView
                 android:id="@+id/diary_create_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/diary_create_content"
-                android:src="@mipmap/image_load_plz"/>
+                android:src="@mipmap/image_load_plz" />
 
         </LinearLayout>
 
