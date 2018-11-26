@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccountCreateActivity extends AppCompatActivity implements DatePickerFragment.OnCompleteListener{
 
@@ -93,29 +94,37 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
     public void onClickac(View view){
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         EditText title = (EditText) findViewById(R.id.editText2);
-        for (int j = 0; j < AccountActivity.listItemsac.size(); j++) {
-            if(check_boxcheck[j] == 0){
-                continue;
+        constantsCursor = db.rawQuery("SELECT " + "*" +
+                " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
+                " WHERE " + AccountingContract.ConstantEntry.COLUMN_NAME_TITLE + " = " + "\"" + title.getText() + "\"", null);
+        constantsCursor.moveToFirst();
+        if(constantsCursor.getCount() > 0){
+            Toast.makeText(this, "같은 이름의 가계부가 존재합니다.", Toast.LENGTH_SHORT).show();
+        }else{
+            for (int j = 0; j < AccountActivity.listItemsac.size(); j++) {
+                if(check_boxcheck[j] == 0){
+                    continue;
+                }
+                ContentValues values = new ContentValues();
+                Log.i("df", String.valueOf(ed[j].getText()));
+                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.account_create_date)).getText().toString());
+                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, String.valueOf(title.getText()));
+                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, AccountActivity.listItemsac.get(j));
+                if(TextUtils.isEmpty(ed[j].getText())){
+                    values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, 0);
+                }else{
+                    values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, Integer.parseInt(String.valueOf(ed[j].getText())));
+                }
+                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, spinner.getSelectedItem().toString());
+                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
+                db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, values);
             }
-            ContentValues values = new ContentValues();
-            Log.i("df", String.valueOf(ed[j].getText()));
-            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(R.id.account_create_date)).getText().toString());
-            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, String.valueOf(title.getText()));
-            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR, AccountActivity.listItemsac.get(j));
-            if(TextUtils.isEmpty(ed[j].getText())){
-                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, 0);
-            }else{
-                values.put(AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, Integer.parseInt(String.valueOf(ed[j].getText())));
-            }
-            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, spinner.getSelectedItem().toString());
-            values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
-            db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, values);
+            Intent intent = new Intent(view.getContext(), MainActivity.class);
+            startActivity(intent);
+            MainActivity.check_ac = 1;
+            db.close();
+            finish();
         }
-        Intent intent = new Intent(view.getContext(), MainActivity.class);
-        startActivity(intent);
-        MainActivity.check_ac = 1;
-        db.close();
-        finish();
     }
 
     private CompoundButton.OnCheckedChangeListener handleCheck (final CheckBox chb) {
