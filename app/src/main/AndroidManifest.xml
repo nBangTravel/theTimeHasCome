@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.nbang.nbangtravel">
+    package="soy.dow.nbang.nbangtravel"
+    android:versionCode="2"
+    android:versionName="1.1">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -44,7 +46,7 @@
 
         <provider
             android:name=".GenericFileProvider"
-            android:authorities="com.example.nbang.nbangtravel.fileprovider"
+            android:authorities="soy.dow.nbang.nbangtravel.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
