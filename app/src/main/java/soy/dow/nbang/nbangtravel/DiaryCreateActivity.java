@@ -9,7 +9,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -82,7 +84,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                 startActivityForResult(cameraIntent, GET_GOOD_PIC);
             }
             checks = 0;
-
         }
 
         if(getEditIntent ==1){
@@ -140,7 +141,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 
@@ -181,11 +181,17 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             if (requestCode == 1) {
                 File imgFile = new File(pictureImagePath);
                 try {
-                    Log.i("FILEPATH-------------", pictureImagePath);
+                    ExifInterface exif = null;
+                    exif = new ExifInterface(imgFile.getAbsolutePath());
+                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
                     imgFile.createNewFile();
-                    Log.i("HERE----------------", "IMAGE FILE EXISTS");
                     Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                    ((ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture)).setImageBitmap(myBitmap);
+
+                    Bitmap bmRotated = rotateBitmap(myBitmap, orientation);
+
+                    ImageView frame = (ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture);
+                    frame.setImageBitmap(bmRotated);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -199,13 +205,72 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         if (requestCode == GALLERY_CODE && resultCode == RESULT_OK) {
             InputStream in = null;
             try {
-                in = getContentResolver().openInputStream(data.getData());
+                Uri uri = data.getData();
+                in = getContentResolver().openInputStream(uri);
                 Bitmap imageBitmap = BitmapFactory.decodeStream(in);
+
+                ExifInterface exif = null;
+                exif = new ExifInterface(getPath(uri));
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+                Bitmap bmRotated = rotateBitmap(imageBitmap, orientation);
+
+                ((ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture)).setImageBitmap(bmRotated);
                 in.close();
-                ((ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture)).setImageBitmap(imageBitmap);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        startManagingCursor(cursor);
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(columnIndex);
+    }
+
+    public static Bitmap rotateBitmap(Bitmap bitmap, int orientation) {
+        Matrix matrix = new Matrix();
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
@@ -221,7 +286,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                         Log.i("HERE----------------", "IMAGE FILE EXISTS");
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
                         ((ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture)).setImageBitmap(myBitmap);
-
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -265,10 +329,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             MainActivity.check_ac=88;
             startActivity(intent);
             finish();
-
         }
-
-
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
@@ -287,19 +348,20 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this).setTitle("다이어리 작성을 취소할까요?").setPositiveButton("네", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                goback =1;
-            }
-        }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                //ignore
-            }
-        }).show();
-
         if (goback==1) {
             super.onBackPressed();
             goback = 0;
+        }else{
+            new AlertDialog.Builder(this).setTitle("다이어리 작성을 취소할까요?").setPositiveButton("네", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    goback=1;
+                    onBackPressed();
+                }
+            }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+                    //ignore
+                }
+            }).show();
         }
     }
 
