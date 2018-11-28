@@ -92,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
             Intent intent = new Intent(view.getContext(), HomeListActivity.class);
             startActivity(intent);
             finish();
+            //Again
         }
     }
 
