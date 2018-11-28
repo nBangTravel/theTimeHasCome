@@ -140,7 +140,10 @@ public class AccountCreateActivity extends AppCompatActivity implements DatePick
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY, spinner.getSelectedItem().toString());
                 values.put(AccountingContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
                 db.insert(AccountingContract.ConstantEntry.TABLE_NAME, AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, values);
+                values.clear();
             }
+            MainActivity activ = (MainActivity)MainActivity.activ;
+            activ.finish();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             MainActivity.check_ac = 1;

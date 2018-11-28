@@ -1,5 +1,6 @@
 package soy.dow.nbang.nbangtravel;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,11 +26,13 @@ public class HomeListActivity extends AppCompatActivity {
     private static final int DELETE_ID = Menu.FIRST+1;
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
+    public static Activity activ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(soy.dow.nbang.nbangtravel.R.layout.activity_homelist);
+        activ = this;
 
 
         db = (new DataBaseHelper(this)).getWritableDatabase();
@@ -123,6 +126,7 @@ public class HomeListActivity extends AppCompatActivity {
     public void onClick(View view){
         Intent intent = new Intent(view.getContext(), ShowCurrency.class);
         startActivity(intent);
+        finish();
     }
 
     private void processDelete(long rowId) {

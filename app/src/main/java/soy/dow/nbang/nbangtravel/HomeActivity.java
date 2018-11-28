@@ -87,6 +87,8 @@ public class HomeActivity extends AppCompatActivity {
 
             input_members = null;
             listItems.clear();
+            HomeListActivity activ = (HomeListActivity)HomeListActivity.activ;
+            activ.finish();
             Intent intent = new Intent(view.getContext(), HomeListActivity.class);
             startActivity(intent);
             finish();
@@ -134,5 +136,10 @@ public class HomeActivity extends AppCompatActivity {
         if (db != null){
             db.close();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

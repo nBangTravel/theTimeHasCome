@@ -1,9 +1,11 @@
 package soy.dow.nbang.nbangtravel;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,11 +14,13 @@ public class MainActivity extends AppCompatActivity {
     static int check_ac = 0;
     private final long FINISH_INTERVAL_TIME = 2000;
     private long backPressedTime = 0;
+    public static Activity activ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(soy.dow.nbang.nbangtravel.R.layout.activity_main);
+        activ = this;
 
         switch (check_ac) {
             case 1:

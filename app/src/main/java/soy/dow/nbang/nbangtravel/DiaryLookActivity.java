@@ -19,6 +19,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,7 +55,7 @@ public class DiaryLookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("다이어리");
-        setContentView(soy.dow.nbang.nbangtravel.R.layout.activity_diary_look);
+        setContentView(R.layout.activity_diary_look);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
@@ -66,13 +67,19 @@ public class DiaryLookActivity extends AppCompatActivity {
                 " WHERE " + DiaryContract.ConstantEntry._ID + " = " + ID, null);
         if(constantsCursor.getCount() == 1){
             if(constantsCursor.moveToFirst()) {
-                TextView title = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_look_title);
+                TextView title = (TextView) findViewById(R.id.diary_look_title);
                 title.setText(constantsCursor.getString(2));
-                TextView date = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_look_date);
+                TextView date = (TextView) findViewById(R.id.diary_look_date);
                 date.setText(constantsCursor.getString(1));
-                TextView content = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_look_content);
+                TextView content = (TextView) findViewById(R.id.diary_look_content);
                 content.setText(constantsCursor.getString(4));
-                ImageView picture = (ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_look_picture);
+                ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
+
+                Log.i("--------업데이트 다이어리", "결과 확인하기--------------");
+                Log.i("--------업데이트 제목", constantsCursor.getString(2));
+                Log.i("--------업데이트 내용", constantsCursor.getString(4));
+                Log.i("--------업데이트 다이어리", "결과 확인하기--------------");
+
                 byte[] src = constantsCursor.getBlob(3);
                 Bitmap b = null;
                 if (src != null) {
@@ -86,26 +93,26 @@ public class DiaryLookActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(soy.dow.nbang.nbangtravel.R.menu.diary_look_actionbar_menu, menu);
+        inflater.inflate(R.menu.diary_look_actionbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case soy.dow.nbang.nbangtravel.R.id.diary_look_bar_delete:
+            case R.id.diary_look_bar_delete:
                 ask_delete();
                 return true;
 
-            case soy.dow.nbang.nbangtravel.R.id.diary_look_bar_edit:
+            case R.id.diary_look_bar_edit:
                 edit();
                 return true;
 
-            case soy.dow.nbang.nbangtravel.R.id.diary_look_bar_instagram:
+            case R.id.diary_look_bar_instagram:
                 shareInstagram();
                 return true;
 
-            case soy.dow.nbang.nbangtravel.R.id.diary_look_bar_facebook:
+            case R.id.diary_look_bar_facebook:
                 shareFacebook();
                 return true;
 
@@ -150,7 +157,7 @@ public class DiaryLookActivity extends AppCompatActivity {
             Date date = new Date(now);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             String getTime = simpleDateFormat.format(date);
-            ImageView picture = (ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_look_picture);
+            ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
             Bitmap bitmap = ((BitmapDrawable)picture.getDrawable()).getBitmap();
             String storage = Environment.getExternalStorageDirectory().getAbsolutePath();
             String fileName = "nbangtravel"+getTime+".png";
@@ -175,7 +182,7 @@ public class DiaryLookActivity extends AppCompatActivity {
             Intent share = new Intent(Intent.ACTION_SEND);
             share.setType("image/*");
             //Uri uri = Uri.fromFile(new File(fullPath, fileName));
-            Uri uri = FileProvider.getUriForFile( this, "com.example.nbang.nbangtravel.fileprovider",new File(fullPath, fileName));
+            Uri uri = FileProvider.getUriForFile( this, "soy.dow.nbang.nbangtravel.fileprovider",new File(fullPath, fileName));
 
             try {
                 share.putExtra(Intent.EXTRA_STREAM, uri);
@@ -226,7 +233,7 @@ public class DiaryLookActivity extends AppCompatActivity {
     }
 
     public void shareFacebook () {
-        ImageView picture = (ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_look_picture);
+        ImageView picture = (ImageView) findViewById(R.id.diary_look_picture);
         Bitmap bitmap = ((BitmapDrawable)picture.getDrawable()).getBitmap();
         CallbackManager callbackManager;
         ShareDialog shareDialog;
@@ -252,6 +259,11 @@ public class DiaryLookActivity extends AppCompatActivity {
                     .build();
             shareDialog.show(content);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     @Override

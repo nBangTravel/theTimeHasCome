@@ -1,6 +1,7 @@
 package soy.dow.nbang.nbangtravel;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,15 +49,12 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     public static int editDiary = 0;
     static final int GET_GOOD_PIC = 1;
     private final int GALLERY_CODE=1112;
-    public static int editId;
     private String pictureImagePath = "";
     public static int EDIT_ID;
     private static Cursor constantsCursor = null;
-    public static int goback = 0;
-
 
     public void onComplete(String date) {
-        TextView textView = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_date);
+        TextView textView = (TextView) findViewById(R.id.diary_create_date);
         textView.setText(date);
     }
 
@@ -66,7 +64,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setTitle("다이어리");
-        setContentView(soy.dow.nbang.nbangtravel.R.layout.activity_diary_create);
+        setContentView(R.layout.activity_diary_create);
 
         if(checks == 1){
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -96,13 +94,13 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             if(constantsCursor.getCount() == 1){
                 Log.i("---------I GOT ONE", constantsCursor.getCount()+"");
                 if(constantsCursor.moveToFirst()) {
-                    TextView title = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_title);
+                    TextView title = (TextView) findViewById(R.id.diary_create_title);
                     title.setText(constantsCursor.getString(2));
-                    TextView date = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_date);
+                    TextView date = (TextView) findViewById(R.id.diary_create_date);
                     date.setText(constantsCursor.getString(1));
-                    TextView content = (TextView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_content);
+                    TextView content = (TextView) findViewById(R.id.diary_create_content);
                     content.setText(constantsCursor.getString(4));
-                    ImageView picture = (ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture);
+                    ImageView picture = (ImageView) findViewById(R.id.diary_create_picture);
                     byte[] src = constantsCursor.getBlob(3);
                     Bitmap b = null;
                     if (src != null) {
@@ -119,20 +117,20 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(soy.dow.nbang.nbangtravel.R.menu.diary_create_actionbar_menu, menu);
+        inflater.inflate(R.menu.diary_create_actionbar_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case soy.dow.nbang.nbangtravel.R.id.diary_create_bar_album:
+            case R.id.diary_create_bar_album:
                 selectGallery();
                 return true;
-            case soy.dow.nbang.nbangtravel.R.id.diary_create_bar_camera:
+            case R.id.diary_create_bar_camera:
                 onClickcamera();
                 return true;
-            case soy.dow.nbang.nbangtravel.R.id.diary_create_bar_save:
+            case R.id.diary_create_bar_save:
                 try {
                     save();
                 } catch (IOException e) {
@@ -190,7 +188,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
                     Bitmap bmRotated = rotateBitmap(myBitmap, orientation);
 
-                    ImageView frame = (ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture);
+                    ImageView frame = (ImageView) findViewById(R.id.diary_create_picture);
                     frame.setImageBitmap(bmRotated);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -214,7 +212,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                 int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
                 Bitmap bmRotated = rotateBitmap(imageBitmap, orientation);
 
-                ((ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture)).setImageBitmap(bmRotated);
+                ((ImageView) findViewById(R.id.diary_create_picture)).setImageBitmap(bmRotated);
                 in.close();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -285,7 +283,7 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
                         imgFile.createNewFile();
                         Log.i("HERE----------------", "IMAGE FILE EXISTS");
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-                        ((ImageView) findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture)).setImageBitmap(myBitmap);
+                        ((ImageView) findViewById(R.id.diary_create_picture)).setImageBitmap(myBitmap);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -294,12 +292,13 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
     }
 
     public void save() throws IOException {
-        ImageView imageView = (ImageView)findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_picture);
+        ImageView imageView = (ImageView)findViewById(R.id.diary_create_picture);
         Bitmap resized;
         byte[] barray = null;
-        if(TextUtils.isEmpty(((TextView)findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_date)).getText())){
+
+        if(TextUtils.isEmpty(((TextView)findViewById(R.id.diary_create_date)).getText())){
             Toast.makeText(this, "날짜를 반드시 입력해주세요", Toast.LENGTH_SHORT).show();
-        }else if(TextUtils.isEmpty(((EditText)findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_title)).getText())){
+        }else if(TextUtils.isEmpty(((EditText)findViewById(R.id.diary_create_title)).getText())){
             Toast.makeText(this, "다이어리의 제목을 반드시 입력해주세요", Toast.LENGTH_SHORT).show();
         }else if((BitmapDrawable)imageView.getDrawable() == null) {
             Toast.makeText(this, "다이어리엔 사진이 필수!", Toast.LENGTH_SHORT).show();
@@ -310,23 +309,36 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             barray = stream.toByteArray();
             resized.recycle();
             stream.close();
+            String date = ((TextView)findViewById(R.id.diary_create_date)).getText().toString();
+            String title =((EditText)findViewById(R.id.diary_create_title)).getText().toString();
+            String content =  ((EditText)findViewById(R.id.diary_create_content)).getText().toString();
+            String table_name = DataBaseHelper.now_travel;
 
+            Log.i("",title);
+            Log.i("",content);
+
+            db = (new DataBaseHelper(this)).getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, ((TextView)findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_date)).getText().toString());
-            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, ((EditText)findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_title)).getText().toString());
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, date);
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TITLE, title);
             values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, barray);
-            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, ((EditText)findViewById(soy.dow.nbang.nbangtravel.R.id.diary_create_content)).getText().toString());
-            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, DataBaseHelper.now_travel);
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, content);
+            values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, table_name);
+
             if(editDiary == 1) {
-                db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ editId, null);
+                db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ EDIT_ID, null);
+                values.clear();
                 Toast.makeText(this, "수정되었습니다", Toast.LENGTH_SHORT).show();
                 editDiary = 0;
             } else {
-                db.insert(DiaryContract.ConstantEntry.TABLE_NAME, DiaryContract.ConstantEntry.COLUMN_NAME_DATE, values);
+                db.insert(DiaryContract.ConstantEntry.TABLE_NAME, null, values);
+                values.clear();
                 Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
             }
+            MainActivity activ = (MainActivity)MainActivity.activ;
+            activ.finish();
             Intent intent = new Intent(this, MainActivity.class);
-            MainActivity.check_ac=88;
+            MainActivity.check_ac = 88;
             startActivity(intent);
             finish();
         }
@@ -348,21 +360,15 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
 
     @Override
     public void onBackPressed() {
-        if (goback==1) {
-            super.onBackPressed();
-            goback = 0;
-        }else{
-            new AlertDialog.Builder(this).setTitle("다이어리 작성을 취소할까요?").setPositiveButton("네", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    goback=1;
-                    onBackPressed();
-                }
-            }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    //ignore
-                }
-            }).show();
-        }
+        new AlertDialog.Builder(this).setTitle("다이어리 작성을 취소할까요?").setPositiveButton("네", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                finish();
+            }
+        }).setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        }).show();
+
     }
 
     @Override

@@ -23,7 +23,7 @@ public class AccountLookActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("지출 일지");
-        setContentView(soy.dow.nbang.nbangtravel.R.layout.activity_account_look);
+        setContentView(R.layout.activity_account_look);
         db = (new DataBaseHelper(this)).getWritableDatabase();
         Intent intent = getIntent();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {

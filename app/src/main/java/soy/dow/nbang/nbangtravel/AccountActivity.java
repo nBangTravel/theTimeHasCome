@@ -54,7 +54,7 @@ public class AccountActivity extends Fragment{
         ((MainActivity) getActivity())
                 .setActionBarTitle("지출 일지");
 
-        final View view = inflater.inflate(soy.dow.nbang.nbangtravel.R.layout.activity_account, container, false);
+        final View view = inflater.inflate(R.layout.activity_account, container, false);
         db = (new DataBaseHelper(getContext())).getWritableDatabase();
         constantsCursor = db.rawQuery("SELECT " + AccountingContract.ConstantEntry._ID + ", " +
                 AccountingContract.ConstantEntry.COLUMN_NAME_DATE + ", " +
@@ -68,11 +68,11 @@ public class AccountActivity extends Fragment{
                 " ORDER BY " + AccountingContract.ConstantEntry._ID + " DESC", null);
 
 
-        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), soy.dow.nbang.nbangtravel.R.layout.listview_account, constantsCursor,
+        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_account, constantsCursor,
                 new String[] {AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR,
                 AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY},
-                new int[] {soy.dow.nbang.nbangtravel.R.id.account_title, soy.dow.nbang.nbangtravel.R.id.account_participator, soy.dow.nbang.nbangtravel.R.id.account_price, soy.dow.nbang.nbangtravel.R.id.account_currency}, 0);
-        final ListView listView = (ListView) view.findViewById(soy.dow.nbang.nbangtravel.R.id.list_accountlist);
+                new int[] {R.id.account_title, R.id.account_participator, R.id.account_price, R.id.account_currency}, 0);
+        final ListView listView = (ListView) view.findViewById(R.id.list_accountlist);
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
 
@@ -98,7 +98,7 @@ public class AccountActivity extends Fragment{
             }
         });
 
-        FloatingActionButton add = (FloatingActionButton) view.findViewById(soy.dow.nbang.nbangtravel.R.id.add2);
+        FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add2);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addAccount(); }
@@ -114,14 +114,14 @@ public class AccountActivity extends Fragment{
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(soy.dow.nbang.nbangtravel.R.menu.account_actionbar_menu, menu);
+        inflater.inflate(R.menu.account_actionbar_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case soy.dow.nbang.nbangtravel.R.id.account_share_kakao:
+            case R.id.account_share_kakao:
                 try {
                     inserttoMap();
                 } catch (JSONException e) {
@@ -158,7 +158,7 @@ public class AccountActivity extends Fragment{
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE,DELETE_ID, Menu.NONE, "삭제").setIcon(soy.dow.nbang.nbangtravel.R.drawable.delete).setAlphabeticShortcut('d');
+        menu.add(Menu.NONE,DELETE_ID, Menu.NONE, "삭제").setIcon(R.drawable.delete).setAlphabeticShortcut('d');
         }
 
     @Override
@@ -202,11 +202,11 @@ public class AccountActivity extends Fragment{
 
         View view = getView();
 
-        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), soy.dow.nbang.nbangtravel.R.layout.listview_account, constantsCursor,
+        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_account, constantsCursor,
                 new String[] {AccountingContract.ConstantEntry.COLUMN_NAME_TITLE, AccountingContract.ConstantEntry.COLUMN_NAME_PARTICIPATOR,
                         AccountingContract.ConstantEntry.COLUMN_NAME_PRICE, AccountingContract.ConstantEntry.COLUMN_NAME_CURRENCY},
-                new int[] {soy.dow.nbang.nbangtravel.R.id.account_title, soy.dow.nbang.nbangtravel.R.id.account_participator, soy.dow.nbang.nbangtravel.R.id.account_price, soy.dow.nbang.nbangtravel.R.id.account_currency}, 0);
-        final ListView listView = (ListView) view.findViewById(soy.dow.nbang.nbangtravel.R.id.list_accountlist);
+                new int[] {R.id.account_title, R.id.account_participator, R.id.account_price, R.id.account_currency}, 0);
+        final ListView listView = (ListView) view.findViewById(R.id.list_accountlist);
         listView.setAdapter(adapter);
     }
 

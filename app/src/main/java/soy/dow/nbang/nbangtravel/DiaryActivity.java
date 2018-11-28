@@ -34,16 +34,15 @@ public class DiaryActivity extends Fragment{
                 DiaryContract.ConstantEntry.COLUMN_NAME_DATE + ", " +
                 DiaryContract.ConstantEntry.COLUMN_NAME_TITLE +
                 " FROM " + DiaryContract.ConstantEntry.TABLE_NAME +
-                " WHERE " + DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" +
-                DataBaseHelper.now_travel + "\"" +
+                " WHERE " + DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL + " = " + "\"" + DataBaseHelper.now_travel + "\"" +
                 " ORDER BY " + DiaryContract.ConstantEntry._ID + " DESC", null);
 
-        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), soy.dow.nbang.nbangtravel.R.layout.listview_diary, constantsCursor,
+        final ListAdapter adapter = new SimpleCursorAdapter(getContext(), R.layout.listview_diary, constantsCursor,
                 new String[] {DiaryContract.ConstantEntry.COLUMN_NAME_DATE, DiaryContract.ConstantEntry.COLUMN_NAME_TITLE},
-                new int[] {soy.dow.nbang.nbangtravel.R.id.diary_date, soy.dow.nbang.nbangtravel.R.id.diary_title}, 0);
+                new int[] {R.id.diary_date, R.id.diary_title}, 0);
 
-        View view = inflater.inflate(soy.dow.nbang.nbangtravel.R.layout.activity_diary, container, false);
-        final ListView listView = (ListView) view.findViewById(soy.dow.nbang.nbangtravel.R.id.list_diarylist);
+        View view = inflater.inflate(R.layout.activity_diary, container, false);
+        final ListView listView = (ListView) view.findViewById(R.id.list_diarylist);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,7 +57,7 @@ public class DiaryActivity extends Fragment{
             }
         });
 
-        FloatingActionButton add = (FloatingActionButton) view.findViewById(soy.dow.nbang.nbangtravel.R.id.add);
+        FloatingActionButton add = (FloatingActionButton) view.findViewById(R.id.add);
         add.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 addDiary();
