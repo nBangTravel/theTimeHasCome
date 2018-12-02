@@ -14,8 +14,8 @@ android {
         applicationId "soy.dow.nbang.nbangtravel"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 5
+        versionName "1.1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -27,6 +27,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
