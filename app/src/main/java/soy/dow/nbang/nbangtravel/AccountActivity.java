@@ -211,24 +211,18 @@ public class AccountActivity extends Fragment{
     }
 
     public void inserttoMap() throws JSONException, InterruptedException {
-
         new ShowCurrency.ExchangeRateTask().execute();
         new putmap().execute();
-
         while(true){
             if(checkResult==0){
                 Thread.sleep(100);
             }else if(checkResult==1){
                 checkResult=0;
-                break;
-            }
-        }
+                break; } }
         shareKakaoTalk();
-        shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n";
-    }
+        shout = DataBaseHelper.now_travel + " 가계부 결과입니다. \n"; }
 
     private class putmap extends AsyncTask<Void, Void, Void> {
-
         @Override
         public void onPostExecute(Void aVoid){
             super.onPostExecute(aVoid);
@@ -241,7 +235,6 @@ public class AccountActivity extends Fragment{
             ArrayList<String> participators = new ArrayList<String>();
             String event = "";
             double eventpay = 0;
-
             Intent intent = new Intent(getActivity(), AccountLookActivity.class);
             constantsCursor = db.rawQuery("SELECT " + "*" +
                     " FROM " + AccountingContract.ConstantEntry.TABLE_NAME +
@@ -249,19 +242,14 @@ public class AccountActivity extends Fragment{
                     DataBaseHelper.now_travel + "\"", null);
             int count = constantsCursor.getCount();
             constantsCursor.moveToFirst();
-
-            try{
-                while(true){
+            try{ while(true){
                     if(s == null){
                         Thread.sleep(100);
                     }else{
-                        break;
-                    }
-                }
+                        break; } }
                 object = new JSONObject(s);
                 object = object.getJSONObject("rates");
                 for(int i = 0; i < count; i++){
-
                     String title = constantsCursor.getString(2);
                     String participator = constantsCursor.getString(3);
                     double price = constantsCursor.getDouble(4);
@@ -275,36 +263,28 @@ public class AccountActivity extends Fragment{
                         temp += tem2;
                         paid.remove(participator);
                         paid.put(participator, temp);
-
                     }else{
                         double tem1 = price/object.getDouble(currency);
                         double tem2 = tem1*object.getDouble("KRW");
-                        paid.put(participator, tem2);
-                    }
-
+                        paid.put(participator, tem2); }
 
                     //Second topay
                     if(event.equals(title)){
                         eventpay += ((double)price)/object.getDouble(currency)*object.getDouble("KRW");
                         participators.add(participator);
-
-                    }else{
-                        for(int j = 0; j<participators.size(); j++){
+                    }else{ for(int j = 0; j<participators.size(); j++){
                             if(topay.containsKey(participators.get(j))){
                                 double temp = topay.get(participators.get(j));
                                 temp += eventpay/participators.size();
                                 topay.remove(participators.get(j));
                                 topay.put(participators.get(j), temp);
                             }else{
-                                topay.put(participators.get(j), eventpay/participators.size());
-                            }
-                        }
+                                topay.put(participators.get(j), eventpay/participators.size()); } }
                         eventpay = 0;
                         participators.clear();
                         event = title;
                         eventpay = ((double)price)/object.getDouble(currency)*object.getDouble("KRW");
-                        participators.add(participator);
-                    }
+                        participators.add(participator); }
                     if(i == count-1){
                         for(int j = 0; j<participators.size(); j++){
                             if(topay.containsKey(participators.get(j))){
@@ -313,30 +293,21 @@ public class AccountActivity extends Fragment{
                                 topay.remove(participators.get(j));
                                 topay.put(participators.get(j), temp);
                             }else{
-                                topay.put(participators.get(j), eventpay/participators.size());
-                            }
-                        }
-                    }
-                    constantsCursor.moveToNext();
-                }
-            }catch(Exception e){
-
-            }
+                                topay.put(participators.get(j), eventpay/participators.size()); } } }
+                    constantsCursor.moveToNext(); }
+            }catch(Exception e){ }
             double[] divide = new double[listItemsac.size()];
             int chc = 0;
             for(String key : topay.keySet()){
                 double value1 = topay.get(key);
                 double value2 = paid.get(key);
                 divide[chc] = value1 - value2;
-                chc += 1;
-            }
-
+                chc += 1; }
             int[][] service = new int[listItemsac.size()][listItemsac.size()];
             for(int i = 0; i<divide.length; i++){
                 if(divide[i]<=0){
                     continue;
-                }else{
-                    for(int j = 0; j<divide.length; j++){
+                }else{ for(int j = 0; j<divide.length; j++){
                         if(divide[j]>=0){
                             continue;
                         }else{
@@ -347,27 +318,17 @@ public class AccountActivity extends Fragment{
                             }else{
                                 service[i][j] += (divide[i]);
                                 divide[j] += divide[i];
-                                divide[i] = 0;
-                            }
-                        }
-                    }
-                }
-            }
+                                divide[i] = 0; } } } } }
 
             for(int i = 0; i<listItemsac.size(); i++){
                 for(int j = 0; j<listItemsac.size();j++){
                     if(service[i][j] != 0){
                         shout += paid.keySet().toArray()[i] + "님이 ";
-                        shout += paid.keySet().toArray()[j] + "님에게 " + service[i][j] + "원을, ";
-                    }
-                }
-            }
+                        shout += paid.keySet().toArray()[j] + "님에게 " + service[i][j] + "원을, "; } } }
             shout += "주시면 됩니다.";
             s = null;
             AccountActivity.checkResult = 1;
-            return null;
-        }
-    }
+            return null; } }
 
     public void shareKakaoTalk(){
         onRequestPermission();
@@ -381,10 +342,7 @@ public class AccountActivity extends Fragment{
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(getContext(), "카카오톡이 설치되지 않았습니다.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+                e.printStackTrace(); } } }
 
     private void onRequestPermission() {
         Toast.makeText(getContext(), "권한을 확인하는 중..", Toast.LENGTH_SHORT).show();

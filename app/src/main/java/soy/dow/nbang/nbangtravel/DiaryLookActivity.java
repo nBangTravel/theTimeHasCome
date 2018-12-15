@@ -141,6 +141,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         MainActivity.check_ac=88;
         startActivity(intent);
+        finish();
     }
 
     public void edit() {
@@ -148,6 +149,7 @@ public class DiaryLookActivity extends AppCompatActivity {
         DiaryCreateActivity.getEditIntent=1;
         editIntent.putExtra("edit_ID", ID);
         startActivity(editIntent);
+        finish();
     }
 
     public void shareInstagram() {
@@ -164,11 +166,9 @@ public class DiaryLookActivity extends AppCompatActivity {
             String folder = "/nBangTravel/";
             String fullPath = storage+folder;
             File file;
-            try {
-                file = new File(fullPath);
+            try { file = new File(fullPath);
                 if(!file.isDirectory()){
-                    file.mkdir();
-                }
+                    file.mkdir(); }
                 FileOutputStream fos = new FileOutputStream(fullPath+fileName);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
                 fos.flush();
@@ -176,14 +176,11 @@ public class DiaryLookActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+                e.printStackTrace(); }
             Intent share = new Intent(Intent.ACTION_SEND);
             share.setType("image/*");
-            //Uri uri = Uri.fromFile(new File(fullPath, fileName));
-            Uri uri = FileProvider.getUriForFile( this, "soy.dow.nbang.nbangtravel.fileprovider",new File(fullPath, fileName));
-
+            Uri uri = FileProvider.getUriForFile( this,
+                    "soy.dow.nbang.nbangtravel.fileprovider",new File(fullPath, fileName));
             try {
                 share.putExtra(Intent.EXTRA_STREAM, uri);
                 share.setPackage("com.instagram.android");
@@ -191,10 +188,7 @@ public class DiaryLookActivity extends AppCompatActivity {
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(this, "인스타그램이 설치되지 않았습니다.", Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+                e.printStackTrace(); } } }
 
     private void onRequestPermission() {
         Toast.makeText(this, "권한을 확인하는 중..", Toast.LENGTH_SHORT).show();
@@ -257,9 +251,7 @@ public class DiaryLookActivity extends AppCompatActivity {
             SharePhotoContent content = new SharePhotoContent.Builder()
                     .addPhoto(photo)
                     .build();
-            shareDialog.show(content);
-        }
-    }
+            shareDialog.show(content); } }
 
     @Override
     public void onBackPressed() {

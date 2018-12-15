@@ -72,29 +72,22 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(this, "참여자 이름은 꼭 필요해요!", Toast.LENGTH_SHORT).show();
         }else if(constantsCursor.getCount() > 0){
             Toast.makeText(this, "이미 존재하는 여행명입니다. 벌써 까먹으셨나요?", Toast.LENGTH_SHORT).show();
-        }else{
-            for(int i = 0; i < listItems.size(); i++){
+        }else{ for(int i = 0; i < listItems.size(); i++){
                 if(i == listItems.size()-1){
                     input_members = input_members + listItems.get(i);
                 }else {
-                    input_members = input_members + listItems.get(i) + ",";
-                }
-            }
+                    input_members = input_members + listItems.get(i) + ","; } }
             ContentValues values = new ContentValues();
             values.put(HomeContract.ConstantEntry.COLUMN_NAME_TRAVEL, String.valueOf(travel.getText()));
             values.put(HomeContract.ConstantEntry.COLUMN_NAME_MEMBERS, input_members);
             db.insert(HomeContract.ConstantEntry.TABLE_NAME, HomeContract.ConstantEntry.COLUMN_NAME_TRAVEL, values);
-
             input_members = null;
             listItems.clear();
             HomeListActivity activ = (HomeListActivity)HomeListActivity.activ;
             activ.finish();
             Intent intent = new Intent(view.getContext(), HomeListActivity.class);
             startActivity(intent);
-            finish();
-            //Again
-        }
-    }
+            finish(); } }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

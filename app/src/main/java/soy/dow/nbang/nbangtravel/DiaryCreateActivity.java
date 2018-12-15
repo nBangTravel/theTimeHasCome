@@ -1,7 +1,6 @@
 package soy.dow.nbang.nbangtravel;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -295,7 +294,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         ImageView imageView = (ImageView)findViewById(R.id.diary_create_picture);
         Bitmap resized;
         byte[] barray = null;
-
         if(TextUtils.isEmpty(((TextView)findViewById(R.id.diary_create_date)).getText())){
             Toast.makeText(this, "날짜를 반드시 입력해주세요", Toast.LENGTH_SHORT).show();
         }else if(TextUtils.isEmpty(((EditText)findViewById(R.id.diary_create_title)).getText())){
@@ -303,7 +301,8 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
         }else if((BitmapDrawable)imageView.getDrawable() == null) {
             Toast.makeText(this, "다이어리엔 사진이 필수!", Toast.LENGTH_SHORT).show();
         }else {
-            resized = getResizedBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap(), imageView.getDrawable().getMinimumWidth());
+            resized = getResizedBitmap(((BitmapDrawable)imageView.getDrawable()).getBitmap(),
+                    imageView.getDrawable().getMinimumWidth());
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             resized.compress(Bitmap.CompressFormat.JPEG, 50, stream);
             barray = stream.toByteArray();
@@ -313,10 +312,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             String title =((EditText)findViewById(R.id.diary_create_title)).getText().toString();
             String content =  ((EditText)findViewById(R.id.diary_create_content)).getText().toString();
             String table_name = DataBaseHelper.now_travel;
-
-            Log.i("",title);
-            Log.i("",content);
-
             db = (new DataBaseHelper(this)).getWritableDatabase();
             ContentValues values = new ContentValues();
             values.put(DiaryContract.ConstantEntry.COLUMN_NAME_DATE, date);
@@ -324,7 +319,6 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             values.put(DiaryContract.ConstantEntry.COLUMN_NAME_PICTURE, barray);
             values.put(DiaryContract.ConstantEntry.COLUMN_NAME_CONTENT, content);
             values.put(DiaryContract.ConstantEntry.COLUMN_NAME_TRAVEL, table_name);
-
             if(editDiary == 1) {
                 db.update(DiaryContract.ConstantEntry.TABLE_NAME, values,"_id = "+ EDIT_ID, null);
                 values.clear();
@@ -333,16 +327,13 @@ public class DiaryCreateActivity extends AppCompatActivity implements DatePicker
             } else {
                 db.insert(DiaryContract.ConstantEntry.TABLE_NAME, null, values);
                 values.clear();
-                Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show();
-            }
+                Toast.makeText(this, "저장되었습니다", Toast.LENGTH_SHORT).show(); }
             MainActivity activ = (MainActivity)MainActivity.activ;
             activ.finish();
             Intent intent = new Intent(this, MainActivity.class);
             MainActivity.check_ac = 88;
             startActivity(intent);
-            finish();
-        }
-    }
+            finish(); } }
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
         int width = image.getWidth();

@@ -17,20 +17,17 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ShowCurrency extends Activity {
-
     public static JSONObject object;
     static String s = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);}
-
     public void OnClick(View view) {
         new ExchangeRateTask().execute();
     }
 
     static class ExchangeRateTask extends AsyncTask<Void, Void, Void> {
-
         private String CLIENT_ID_EXCHANGE_RATE = "b9a8c1f1075e4fe883cfb9d2cc376d80";
 
         @Override
@@ -48,24 +45,15 @@ public class ShowCurrency extends Activity {
             client.newCall(request).enqueue(new Callback(){
 
                 @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
+                public void onFailure(Call call, IOException e) { }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     AccountActivity.s = response.body().string();
-
-                    try{
-                        object = new JSONObject(AccountActivity.s);
+                    try{object = new JSONObject(AccountActivity.s);
                         object = object.getJSONObject("rates");
                     }catch(JSONException e){
-                        e.printStackTrace();
-
-                    }
-                }
-            });
+                        e.printStackTrace(); } } });
             return null;
-        }
-    }
+        } }
 }
