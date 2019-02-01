@@ -1,9 +1,5 @@
 *** n빵여행 ***
 
-
-![ex_screenshot](./img/nBang.png)
-
-
 프로젝트기간: 2018.10 ~ 2018.11
 
 팀 멤버: 전동원, 김소영
@@ -30,3 +26,5 @@ n빵여행 앱 설명:
 4. 여행제목과 참여자만 있으면, 다양한 여행을 추가할 수 있습니다.
 - 여행제목과 참여자를 입력해 여행을 생성하세요.
 - 참여자 정보는 가계부 생성을 더욱 간편하게 만들어줍니다.
+
+플레이스토어 주소: https://play.google.com/store/apps/details?id=soy.dow.nbang.nbangtravel
